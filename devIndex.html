@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
@@ -65,6 +64,48 @@
             display: inline-block;
             width: 100%;
         }
+
+        /* content carousel */
+
+        .carousel-wrap {
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-wrap ul {
+            position: absolute;
+            bottom: 0.25rem;
+            left: 50%;
+            z-index: 2;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 10px;
+            background: rgb(144, 144, 144);
+            list-style: none;
+        }
+
+        .carousel {
+            width: 100vw;
+            height: 100%;
+            transition: 1s;
+        }
+
+        .carousel-img {
+            flex-shrink: 0;
+            flex-grow: 1;
+            width: 100%;
+            min-height: 100%;
+            object-fit: scale-down;
+            position: relative;
+
+        }
     </style>
 </head>
 
@@ -83,6 +124,64 @@
             <li class="col "><a href="#">最新消息</a></li>
         </ul>
     </header>
+
+    <content>
+        <div class="carousel-wrap container-fluid m-0 p-0">
+            <ul class="d-flex m-0 p-0">
+                <li class="circle"></li>
+                <li class="circle"></li>
+                <li class="circle"></li>
+                <li class="circle"></li>
+            </ul>
+            <div class="carousel d-flex">
+                <img class="carousel-img" src="images/banner_astro-a839be5c.jpg" alt="">
+                <img class="carousel-img" src="images/banner_imcodingit-53a9a811.jpg" alt="">
+                <img class="carousel-img" src="images/banner_mokumokukai-f9ec6b54.jpg" alt="">
+                <img class="carousel-img" src="images/banner_5xruby-3d66d288.jpg" alt="">
+            </div>
+            <!-- <div class="carousel ">
+            </div>
+            <div class="carousel ">
+            </div>
+            <div class="carousel ">
+            </div> -->
+        </div>
+    </content>
 </body>
+
+<script>
+    let body = document.querySelector('body')
+    let circle = document.getElementsByClassName('circle')
+    let carouselImg = document.querySelectorAll('.carousel-img')
+    let carousel = document.querySelector('.carousel')
+    carousel.style.width = carouselImg.length * body.offsetWidth
+    let num = 0
+    console.log(carousel.style.width)
+    run = (i) => {
+        num = i
+        clearInterval()
+        console.log(carouselImg[i])
+        let moveLength = i * body.offsetWidth
+        // carousel.style.left = (carousel.style.width - moveLength) + 'px'
+
+
+        $(carouselImg[i]).animate({ width: '100%' })
+            .siblings().css({ 'transform': `translateX:${moveLength}+px` }).animate({ width: 0 }, 500)
+        // carousel.style.transform = `translateX(${carousel.style.width - moveLength}px)`
+        console.log(body.offsetWidth)
+        console.log(carousel.style)
+
+    }
+    for (let i = 0; i < circle.length; i++) {
+        circle[i].addEventListener('click', () => run(i))
+
+    }
+    setInterval(function () {
+        num++
+        if (num > 3) num = 0
+        run(num)
+    }, 5000);
+
+</script>
 
 </html>
