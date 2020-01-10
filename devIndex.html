@@ -75,8 +75,9 @@
 
         .carousel-wrap ul {
             position: absolute;
-            bottom: 0.25rem;
+            bottom: 1.5rem;
             left: 50%;
+            transform: translateX(-50%);
             z-index: 2;
             justify-content: center;
             overflow: hidden;
@@ -93,18 +94,120 @@
 
         .carousel {
             width: 100vw;
-            height: 100%;
-            transition: 1s;
         }
 
         .carousel-img {
             flex-shrink: 0;
             flex-grow: 1;
+            position: relative;
+            transition: .2s;
             width: 100%;
             min-height: 100%;
-            object-fit: scale-down;
-            position: relative;
+        }
 
+        .carousel-img img {
+            width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+        }
+
+        /* about */
+        .about {
+            width: 100%;
+            min-height: 100%;
+            background: rgb(255, 255, 231);
+            padding-top: 16px;
+        }
+
+        .title {
+            text-align: center;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .title::after {
+            content: ' ';
+            width: 100px;
+            height: 5px;
+            background: palevioletred;
+            position: absolute;
+            bottom: -20px;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        figure {
+            text-align: center;
+            margin: 16px;
+            font-size: 20px;
+        }
+
+        figure a {
+            color: gray;
+            font-size: 1rem;
+        }
+
+        figure h4 {
+            font-size: 1.2rem;
+            margin-top: 0.8rem;
+        }
+
+        figure p {
+            margin-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        /* lesson */
+        .content {
+            height: 90vh;
+            padding: 2rem 0;
+
+        }
+
+        .cardwrap {
+            display: flex;
+            height: 80%;
+        }
+
+        .myCard {
+            border: 1px solid gray;
+            border-radius: 6px;
+            display: block;
+            margin: 1rem;
+            width: 33.3%;
+            font-size: .7rem;
+            color: gray;
+        }
+
+        .myCard img {
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .cardContent {
+            padding: 1rem 0.5rem;
+        }
+
+        .cardContent h5 {
+            font-size: .8rem;
+        }
+
+        .lessoninfo {
+            height: 100px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .lessonLink {
+            background: rgb(177, 14, 49);
+            max-width: 300px;
+            display: block;
+            white-space: nowrap;
+            text-align: center;
+            border-radius: 6px;
+            padding: 12px 50px;
+            margin: 30px auto;
+            color: white;
         }
     </style>
 </head>
@@ -125,7 +228,7 @@
         </ul>
     </header>
 
-    <content>
+    <main>
         <div class="carousel-wrap container-fluid m-0 p-0">
             <ul class="d-flex m-0 p-0">
                 <li class="circle"></li>
@@ -134,51 +237,128 @@
                 <li class="circle"></li>
             </ul>
             <div class="carousel d-flex">
-                <img class="carousel-img" src="images/banner_astro-a839be5c.jpg" alt="">
-                <img class="carousel-img" src="images/banner_imcodingit-53a9a811.jpg" alt="">
-                <img class="carousel-img" src="images/banner_mokumokukai-f9ec6b54.jpg" alt="">
-                <img class="carousel-img" src="images/banner_5xruby-3d66d288.jpg" alt="">
+                <a href="#" class="carousel-img">
+                    <img src="images/banner_astro-a839be5c.jpg" alt="">
+                </a>
+                <a href="#" class="carousel-img">
+                    <img src="images/banner_imcodingit-53a9a811.jpg" alt="">
+                </a>
+                <a href="#" class="carousel-img">
+                    <img src="images/banner_mokumokukai-f9ec6b54.jpg" alt="">
+                </a>
+                <a href="#" class="carousel-img">
+                    <img src="images/banner_5xruby-3d66d288.jpg" alt="">
+                </a>
             </div>
-            <!-- <div class="carousel ">
-            </div>
-            <div class="carousel ">
-            </div>
-            <div class="carousel ">
-            </div> -->
         </div>
-    </content>
+        <section class="about">
+            <h2 class='title'>關於五倍紅寶石 About 5xRuby</h2>
+            <div class="about container d-flex justify-content-between">
+                <figure>
+                    <a href="#">
+                        <img src="images/feature-list-img1-0d20ab19.png" alt="">
+                        <h4>網頁設計<br>前後端課程教學</h4>
+                        <p>帶你掌握程式技能轉職工程師，城市課程從入門到進階讓你快速上手，學員好評推薦轉職課程!</p>
+                    </a>
+                </figure>
+                <figure>
+                    <a href="#">
+                        <img src="images/feature-list-img2-26e4ca80.png" alt="">
+                        <h4>頂尖技術<br>網頁製作、專案開發</h4>
+                        <p>網站開發到行動裝置App工程服務、系統設計開發甚至系統架設，提供專業的建議與頂尖的技術</p>
+                    </a>
+                </figure>
+                <figure>
+                    <a href="#">
+                        <img src="images/feature-list-img3-d0a4089e.png" alt="">
+                        <h4>資訊軟體開發技術顧問</h4>
+                        <p>協助您將現有人力快速打造為Ruby/Rails團隊，無須經歷繁瑣的人才招募就有即戰力!</p>
+                    </a>
+                </figure>
+                <figure>
+                    <a href="#">
+                        <img src="images/feature-list-img4-13321bf0.png" alt="">
+                        <h4>前後端工程師<br>社群經營</h4>
+                        <p>Ruby社群經營、舉辦各類活動，促進Ruby社群發展，歡迎前後端工程師分享交流</p>
+
+                    </a>
+                </figure>
+            </div>
+        </section>
+        <div class="content container">
+            <h2 class='title'> 熱門網頁設計課程推薦</h2>
+            <div class="cardwrap ">
+                <a href="#" class="myCard">
+                    <img src="images/ruby-on-rails-7c597107.jpg" alt="">
+                    <div class="cardContent">
+                        <h5>Ruby on Rails 實戰課程-假日班</h5>
+                        <p>2019-12-07</p>
+                        <p class="lessoninfo">後臺開發不是夢!實戰程度百分百的Ruby & Rails 課程。具備高度生產力，簡潔、有效率的編寫，
+                            即便是初學者也能快速上手的Ruby程式語言
+                        </p>
+                        講者:高見龍(Eddie Kao)|時數:30小時
+                    </div>
+                </a>
+                <a href="#" class="myCard">
+                    <img src="images/functional-09be0f61.jpg" alt="">
+                    <div class="cardContent">
+                        <h5>工作上用的到的函數是程式設計:從觀念到食物-假日班</h5>
+                        <p>2020-02-22</p>
+                        <p class="lessoninfo">隨著多核心電腦成為主流、分散式系統架構也成為顯學，函數式程式設計的重要性也與日俱增。跟物件導向程式設計相比，
+                            著重於用真正的意圖。因此當學會用與物件導向程式程計不同的角度來寫程式後，可以讓你在切換不同的程式語言時依然能游刃有餘。
+                        </p>
+                        講者:蘇秦安(Taian Su)|時數:9小時
+                    </div>
+                </a>
+                <a href="#" class="myCard">
+                    <img src="images/rwd-99b9e59b.jpg" alt="">
+                    <div class="cardContent">
+                        <h5>客製化進階 RWD 手機版網頁設計班 - 假日班</h5>
+                        <p>2020-03-08</p>
+                        <p class="lessoninfo">你還在困擾網頁該怎麼做RWD 嗎？講師手把手教學，帶你快速上手
+                            RWD，不僅教你技術及方法，還要建立你正確的網頁觀念，融會貫通後你將大幅提高自學能力，降低卡關浪費時間查找的困擾！
+                        </p>
+                        講者:李建杭(Amos Lee)|時數:24小時
+                    </div>
+
+                </a>
+            </div>
+            <a href="#" class="lessonLink">看更多網頁課程</a>
+        </div>
+    </main>
 </body>
 
 <script>
     let body = document.querySelector('body')
-    let circle = document.getElementsByClassName('circle')
+    let circle = document.querySelectorAll('.circle')
     let carouselImg = document.querySelectorAll('.carousel-img')
-    let carousel = document.querySelector('.carousel')
-    carousel.style.width = carouselImg.length * body.offsetWidth
     let num = 0
-    console.log(carousel.style.width)
+    $(circle[0]).css('background', 'green')
     run = (i) => {
-        num = i
-        clearInterval()
-        console.log(carouselImg[i])
-        let moveLength = i * body.offsetWidth
-        // carousel.style.left = (carousel.style.width - moveLength) + 'px'
+        $(carouselImg[i]).animate({
+            'left': '0px',
+            'width': '100%'
+        }, 0)
+            .siblings().stop(true, true).animate({
+                'left': body.offsetWidth,
+                'width': 0
+            }, 200)
 
-
-        $(carouselImg[i]).animate({ width: '100%' })
-            .siblings().css({ 'transform': `translateX:${moveLength}+px` }).animate({ width: 0 }, 500)
-        // carousel.style.transform = `translateX(${carousel.style.width - moveLength}px)`
-        console.log(body.offsetWidth)
-        console.log(carousel.style)
-
+        $(circle[i]).css('background', 'green')
+            .siblings().css('background', 'rgb(144, 144, 144)')
     }
     for (let i = 0; i < circle.length; i++) {
-        circle[i].addEventListener('click', () => run(i))
-
+        circle[i].addEventListener('click', () => {
+            clearInterval(autoRun)
+            run(i)
+        })
     }
-    setInterval(function () {
+    let autoRun = setInterval(function () {
         num++
-        if (num > 3) num = 0
+        if (num > 3) {
+            $(carouselImg[0]).css('left', 0)
+            num = 0
+        }
         run(num)
     }, 5000);
 
