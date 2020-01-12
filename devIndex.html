@@ -45,7 +45,7 @@
         }
 
         .logo {
-            padding: 16px;
+            padding: .5rem;
             flex-shrink: 0;
         }
 
@@ -54,18 +54,24 @@
             object-fit: scale-down;
         }
 
-        .row li {
-            padding: 10px;
+        .mynav li {
+            padding: .5rem;
             font-size: 0.8rem;
         }
 
-        .tagEvent {
+        .mynav li:nth-child(2) {
+            flex: 1 0 16%;
+        }
+
+        #tagEvent {
+            display: inline-block;
             padding: 3px 6px;
             background: maroon;
             border-radius: 5px;
             color: white;
             font-size: 14px;
-            /* white-space: nowrap; */
+            animation: gorotate .8s alternate infinite forwards;
+            transform-origin: top left;
         }
 
         header li a {
@@ -74,6 +80,16 @@
             color: gray;
             display: inline-block;
             width: 100%;
+        }
+
+        #mobilenav {
+            width: 150px;
+            display: none;
+            margin: 0 auto;
+        }
+
+        #mobilenav li {
+            margin-bottom: 12px;
         }
 
         /* content carousel */
@@ -94,11 +110,13 @@
         }
 
         .circle {
-            width: 20px;
-            height: 20px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
+            padding: 10px;
             margin: 10px;
             background: rgb(144, 144, 144);
+            cursor: pointer;
         }
 
         .carousel {
@@ -132,7 +150,7 @@
         .title {
             text-align: center;
             position: relative;
-            font-size: 1rem;
+            font-size: 1.5rem;
         }
 
         .title::after {
@@ -248,7 +266,6 @@
 
         #studentWrap {
             width: 100%;
-
             position: absolute;
             left: 0;
             top: 6rem;
@@ -285,13 +302,111 @@
         /* 更多案例連結 */
         article .font-color {
             display: block;
-            text-align: right;
-            padding-right: 1rem;
+            width: 140px;
+            float: right;
         }
 
         /* contact */
         .contact {
             text-align: center;
+        }
+
+        /* footer */
+        .footImg {
+            width: 300px;
+        }
+
+        .footImg img {
+            width: 100%;
+        }
+
+        .footLink {
+            flex-wrap: wrap;
+            padding-left: 2rem;
+        }
+
+        .footLink li {
+            margin: 6px;
+        }
+
+        .footLink li a {
+            word-break: keep-all;
+        }
+
+        .contactInfo {
+            padding-left: 2rem;
+        }
+
+        .copyright {
+            text-align: center;
+        }
+
+        /* rwd排版 */
+        @media screen and (max-width: 1199px) {
+            .mynav li {
+                padding: 14px 0;
+                font-size: .7rem;
+            }
+        }
+
+        @media screen and (max-width: 991px) {
+            .header {
+                padding-right: 0;
+            }
+
+            .mynav {
+                display: none;
+            }
+
+            #burger {
+                background: rgb(179, 0, 9);
+                width: 70px;
+                min-height: 10%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-flow: column nowrap;
+                cursor: pointer;
+                padding: 16px;
+            }
+
+            .line {
+                background: white;
+                height: 10%;
+                width: 80%;
+                border-radius: 6px;
+            }
+
+            .content {
+                height: unset;
+            }
+
+            .about {
+                flex-direction: column;
+            }
+
+            .cardwrap {
+                flex-direction: column;
+                align-items: center;
+                max-width: 800px;
+                height: 70%;
+            }
+
+            .myCard {
+                width: 90%;
+            }
+        }
+
+        /* nav動畫 */
+        @keyframes gorotate {
+
+            50% {
+                transform: translateY(4px) rotate(-10deg);
+            }
+
+            100% {
+                transform: rotate(0);
+            }
         }
     </style>
 </head>
@@ -299,10 +414,10 @@
 <body>
     <header class="header container-fluid">
         <div class="logo"><img src="images/logo-c473f739.png" alt="五倍紅寶石logo"></div>
-        <ul class="row pl-0">
+        <ul class="mynav row pl-0">
             <li class="col "><a href="#">線上課程</a> </li>
-            <li class="col-3 "><a href="#">ASTRO Camp
-                    <span class="tagEvent"> 報名優惠中</a></span>
+            <li class="col"><a href="#">ASTRO Camp
+                    <span id="tagEvent"> 報名優惠中</a></span>
             </li>
             <li class="col "> <a href="#">短期課程</a></li>
             <li class="col "><a href="#">專案開發</a></li>
@@ -310,8 +425,25 @@
             <li class="col "><a href="#">空間租借</a></li>
             <li class="col "><a href="#">最新消息</a></li>
         </ul>
+        <div id="burger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
     </header>
-
+    <nav class="container-fluid">
+        <ul id="mobilenav" class="pl-0">
+            <li><a href="#">線上課程</a> </li>
+            <li><a href="#">ASTRO Camp
+                    <span id="tagEvent"> 報名優惠中</a></span>
+            </li>
+            <li><a href="#">短期課程</a></li>
+            <li><a href="#">專案開發</a></li>
+            <li><a href="#">企業代訓</a></li>
+            <li><a href="#">空間租借</a></li>
+            <li><a href="#">最新消息</a></li>
+        </ul>
+    </nav>
     <main>
         <div class="carousel-wrap position-relative container-fluid m-0 p-0">
             <ul class="d-flex m-0 p-0">
@@ -469,9 +601,9 @@
                 </ul>
             </div>
         </section>
-        <section>
+        <section class="container">
             <h2 class='title'> 案例作品Showcase</h2>
-            <div class="container d-flex justify-content-between">
+            <div class=" d-flex justify-content-between">
                 <div class="cardwrap ">
                     <a href="#" class="myCard">
                         <img src="images/space_next_door-4dfdfeb6.png" alt="">
@@ -509,10 +641,8 @@
                     </a>
                 </div>
             </div>
-        </section>
-        <div class="container">
             <a class="font-color" href="#">...更多案例</a>
-        </div>
+        </section>
     </article>
     <div class="contact container my-5">
         <h5>想更瞭解我們嗎？</h5>
@@ -522,13 +652,69 @@
             <span><a class="font-color" href="#">線上洽詢</a></span>
             ，會有親切的客服人員回答您的問題，也可以透過社群網站隨時關注我們的動態。
         </p>
+        <a href="#" class="m-2">
+            <img src="images/icon-fb-2f24e7a0.png" alt="臉書網址">
+        </a>
+        <a href="#" class="m-2">
+            <img src="images/icon-twitter-89f8d087.png" alt="官方twitter">
+        </a>
     </div>
-    <footer></footer>
+    <footer class="footerWrap">
+        <div class="d-flex m-5 justify-content-center">
+            <div class="footImg">
+                <a href="#">
+                    <img src="images/press-img-3161693e.png" alt="">
+                </a>
+                <a href="">
+                    <img src="images/cakeresume-8938f367.png" alt="">
+                    找工作
+                </a>
+            </div>
+            <div class="contactWrap">
+                <ul class="footLink d-flex font-color">
+                    <li><a class="font-color" href="">關於五倍紅寶石</a></li>
+                    <li><a class="font-color" href="">媒體報導</a></li>
+                    <li><a class="font-color" href="">團隊成員</a></li>
+                    <li><a class="font-color" href="">聯絡詢價</a></li>
+                    <li><a class="font-color" href="">常見問題</a></li>
+                    <li><a class="font-color" href="">工作機會</a></li>
+                    <li><a class="font-color" href="">開源專案</a></li>
+                    <li><a class="font-color" href="">隱私權條款</a></li>
+                    <li><a class="font-color" href="">服務條款</a></li>
+                </ul>
+                <div class="contactInfo d-flex">
+                    <div class="contactInfoLeft mr-5">
+                        <h6 class="font-color"><strong>02-2331-5247</strong></h6>
+                        <p>Mon-Fri/09:30-22:00</p>
+                    </div>
+                    <div class="contactInfoRight">
+                        <p>有任何問題嗎?</p>
+                        <p>hi@5xruby.tw</p>
+                        <a href="">地址:10046台北市中正區衡陽路7號5樓</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="copyright"> &copy;2014-2020五倍紅寶石股份有限公司(5XRUBY CO.LTD)
+            <br>
+            台北市短期補習班立案 第7594號
+        </p>
+    </footer>
 </body>
 
 <script>
-    // 大版面跑馬燈
     let body = document.querySelector('body')
+    // mobileNavbar
+    let mobileIcon = document.getElementById('burger')
+    mobileIcon.addEventListener("click", function () {
+        $('#mobilenav').slideToggle()
+    })
+    window.addEventListener("resize", function () {
+        if (body.offsetWidth > 991) {
+            $('#mobilenav').hide()
+        }
+    })
+    // 大版面跑馬燈
     let circle = document.querySelectorAll('.circle')
     let carouselImg = document.querySelectorAll('.carousel-img')
     let num = 0
@@ -565,16 +751,22 @@
     let students = document.querySelectorAll('.student')
     let stWidth = 992
     let stCircle = document.querySelectorAll('.st-circle')
-    $('#studentWrap').css('width', stWidth * students.length)
+
+    $('#studentWrap').css('width', body.offsetWidth * students.length)
+    // 設定ul總長跟裡面li圖片跑的距離
     function recommendRun(k) {
+        $('#studentWrap').css('width', body.offsetWidth * students.length)
         $('#studentWrap').css('left', -(k * body.offsetWidth) + 'px')
         $(students[k]).css('visibility', 'visible')
             .siblings().css('visibility', 'hidden')
+        window.addEventListener('resize', function () {
+            $('#studentWrap').css('left', -(k * body.offsetWidth) + 'px')
+        })
     }
     for (let k = 0; k < students.length; k++) {
-
         stCircle[k].addEventListener('click', () => recommendRun(k))
     }
+    // 畫面拉動的時候重新偵測li圖片位置
     setInterval(() => {
     }, 1000);
 </script>
