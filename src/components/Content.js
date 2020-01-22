@@ -17,12 +17,10 @@ const Content = () => {
   //requst API
   useEffect(() => {
     if (warning) {
-      console.log(1);
       alert("此為測試，圖像皆為五倍紅寶石授權");
       setWarning(false);
     }
     if (lesson.length === 0) {
-      console.log(2);
       fetch("https://my-json-server.typicode.com/monkeychen528/demo/db")
         .then((res) => res.json())
         .then((json) => {
@@ -98,7 +96,7 @@ const Content = () => {
   );
 
   let resizeWindow = useCallback(() => {
-    // console.log(window.innerWidth);
+    //  (window.innerWidth);
     setRwdWidth(window.innerWidth);
     smallCarousel(stnum);
   }, [smallCarousel, stnum]);
@@ -106,12 +104,10 @@ const Content = () => {
   let savedCallback = useRef();
 
   useEffect(() => {
-    console.log(3);
     savedCallback.current = { bigCarousel, smallCarousel };
   }, [bigCarousel, num, smallCarousel, stnum]);
 
   useEffect(() => {
-    console.log(4);
     window.addEventListener("resize", resizeWindow);
     // interval(num);
     function interval() {
