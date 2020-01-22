@@ -35,6 +35,7 @@ form {
   border: 0 transparent;
   border-radius: 6px;
   color: white;
+  text-align: center;
   cursor: pointer;
   padding: 16px;
 }
