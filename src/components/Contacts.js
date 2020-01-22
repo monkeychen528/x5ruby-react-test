@@ -6,9 +6,6 @@ class Contacts extends Component {
   constructor(props) {
     super(props);
   }
-  // textChange = (e) => {
-  //   console.log(e);
-  // };
 
   render() {
     console.log(this.props);

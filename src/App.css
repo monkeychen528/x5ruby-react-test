@@ -97,7 +97,9 @@ header li a {
   background: rgb(144, 144, 144);
   cursor: pointer;
 }
-
+.circleActive {
+  background: green;
+}
 .carousel {
   width: 100vw;
 }

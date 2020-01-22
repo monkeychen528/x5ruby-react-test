@@ -8,28 +8,37 @@ const Content = () => {
   let [num, setNum] = useState(0);
   let [stnum, setStnum] = useState(0);
   let [lesson, setLesson] = useState([]);
+  let [warning, setWarning] = useState(true);
+
+  let body = document.querySelector("body");
+  let circle = document.querySelectorAll(".circle");
+  let carouselImg = document.querySelectorAll(".carousel-img");
 
   //requst API
   useEffect(() => {
+    if (warning) {
+      console.log(1);
+      alert("此為測試，圖像皆為五倍紅寶石授權");
+      setWarning(false);
+    }
     if (lesson.length === 0) {
+      console.log(2);
       fetch("https://my-json-server.typicode.com/monkeychen528/demo/db")
         .then((res) => res.json())
         .then((json) => {
           setLesson(json.posts);
         });
     }
-  });
+  }, [circle, lesson.length, warning]);
 
   // 大版面跑馬燈
-  let body = document.querySelector("body");
-  let circle = document.querySelectorAll(".circle");
-  let carouselImg = document.querySelectorAll(".carousel-img");
 
   let bigCarousel = useCallback(
     (num) => {
-      // console.log(num);
-
-      $(circle[num]).css("background", "green");
+      $(circle[num])
+        .addClass("circleActive")
+        .siblings()
+        .removeClass("circleActive");
       $(carouselImg[num])
         .animate(
           {
@@ -84,64 +93,9 @@ const Content = () => {
       } else {
         setStnum(stnum);
       }
-      //   for (let k = 0; k < students.length; k++) {
-      //     stCircle[k].addEventListener("click", () => recommendRun(k));
-      //   }
     },
     [body.offsetWidth]
   );
-  //   let go = () => {
-  //     setInterval(() => {
-  //       //   let stnum = 0;
-  //       setStnum(stnum + 1);
-  //       let body = document.querySelector("body");
-
-  //       let students = document.querySelectorAll(".student");
-  //       let studentWrap = document.querySelector("#studentWrap");
-  //       if (stnum === students.length) {
-  //         // clearInterval(go);
-  //         console.log("wtf");
-  //         $("#studentWrap").css({
-  //           visibility: "hidden"
-  //         });
-  //         setTimeout(() => {
-  //           $("#studentWrap").css({
-  //             left: body.offsetWidth
-  //           });
-  //         }, 500);
-
-  //         for (let k = 0; k < students.length; k++) {
-  //           studentWrap.appendChild(students[k]);
-
-  //           //   $("#studentWrap").css({ visibility: "" });
-  //         }
-  //         setTimeout(() => {
-  //           setStnum(0);
-  //           $("#studentWrap").css({
-  //             visibility: "",
-  //             left: 0
-  //           });
-  //           smallCarousel(stnum);
-  //         }, 1000);
-  //       } else {
-  //         $("#studentWrap").css({
-  //           left: -(stnum * body.offsetWidth) + "px"
-  //         });
-  //         smallCarousel(stnum);
-  //       }
-  //       //   setTimeout(() => {
-  //       //     $("#studentWrap").css({ left: 0 });
-  //       //   }, 300);
-  //       //   studentWrap.style.left = stnum * body.offsetWidth;
-  //       //   studentWrap.style.transition = "none";
-  //       //   setTimeout(() => {
-  //       //     studentWrap.style.transition = "all 0.5s";
-  //       //   }, 500);
-
-  //       studentWrap.addEventListener("transitionend", function() {});
-  //     }, 3000);
-  //   };
-  //   go();
 
   let resizeWindow = useCallback(() => {
     // console.log(window.innerWidth);
@@ -150,25 +104,14 @@ const Content = () => {
   }, [smallCarousel, stnum]);
 
   let savedCallback = useRef();
-  let dispatch = useCallback((num) => {
-    bigCarousel(num);
-  });
-  let autorun = useCallback(
-    (stnum) => {
-      if (stnum === 4) {
-        setStnum(0);
-      } else {
-        setStnum(stnum);
-      }
-      smallCarousel(stnum);
-    },
-    [smallCarousel]
-  );
+
   useEffect(() => {
+    console.log(3);
     savedCallback.current = { bigCarousel, smallCarousel };
   }, [bigCarousel, num, smallCarousel, stnum]);
 
   useEffect(() => {
+    console.log(4);
     window.addEventListener("resize", resizeWindow);
     // interval(num);
     function interval() {
@@ -191,7 +134,10 @@ const Content = () => {
       <main>
         <div className="carousel-wrap position-relative container-fluid m-0 p-0">
           <ul className="d-flex m-0 p-0">
-            <li className="circle" onClick={() => bigCarousel(0)}></li>
+            <li
+              className="circle circleActive"
+              onClick={() => bigCarousel(0)}
+            ></li>
             <li
               className="circle"
               onClick={() => {
@@ -295,43 +241,6 @@ const Content = () => {
                 </Link>
               );
             })}
-            {/* <Link to="" className="myCard">
-              <img src="images/ruby-on-rails-7c597107.jpg" alt="" />
-              <div className="cardContent">
-                <h5>Ruby on Rails 實戰課程-假日班</h5>
-                <p>2019-12-07</p>
-                <p className="lessoninfo">
-                  後臺開發不是夢!實戰程度百分百的Ruby & Rails
-                  課程。具備高度生產力，簡潔、有效率的編寫，
-                  即便是初學者也能快速上手的Ruby程式語言
-                </p>
-                講者:高見龍(Eddie Kao)|時數:30小時
-              </div>
-            </Link>
-            <Link to="" className="myCard">
-              <img src="images/functional-09be0f61.jpg" alt="" />
-              <div className="cardContent">
-                <h5>工作上用的到的函數是程式設計:從觀念到食物-假日班</h5>
-                <p>2020-02-22</p>
-                <p className="lessoninfo">
-                  隨著多核心電腦成為主流、分散式系統架構也成為顯學，函數式程式設計的重要性也與日俱增。跟物件導向程式設計相比，
-                  著重於用真正的意圖。因此當學會用與物件導向程式程計不同的角度來寫程式後，可以讓你在切換不同的程式語言時依然能游刃有餘。
-                </p>
-                講者:蘇秦安(Taian Su)|時數:9小時
-              </div>
-            </Link>
-            <Link to="" className="myCard">
-              <img src="images/rwd-99b9e59b.jpg" alt="" />
-              <div className="cardContent">
-                <h5>客製化進階 RWD 手機版網頁設計班 - 假日班</h5>
-                <p>2020-03-08</p>
-                <p className="lessoninfo">
-                  你還在困擾網頁該怎麼做RWD 嗎？講師手把手教學，帶你快速上手
-                  RWD，不僅教你技術及方法，還要建立你正確的網頁觀念，融會貫通後你將大幅提高自學能力，降低卡關浪費時間查找的困擾！
-                </p>
-                講者:李建杭(Amos Lee)|時數:24小時
-              </div>
-            </Link> */}
           </div>
           <Link to="" className="lessonLink">
             看更多網頁課程
