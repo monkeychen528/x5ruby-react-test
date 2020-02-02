@@ -1,48 +1,53 @@
-import React, { Component } from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import "../Contacts.css";
-import Modal from "react-modal";
-Modal.setAppElement("#root");
+import React, { Component } from 'react';
+import Modal from 'react-modal';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import '../Contacts.css';
+
+Modal.setAppElement('#root');
 
 const formRef = React.createRef();
 
 class Contacts extends Component {
+  customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       modalIsOpen: false,
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: ""
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: '',
     };
   }
-  customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)"
-    }
-  };
 
   setname = (e) => {
     this.setState({ name: e.target.value });
   };
+
   setemail = (e) => {
     this.setState({ email: e.target.value });
   };
+
   setphone = (e) => {
     this.setState({ phone: e.target.value });
   };
+
   setsubject = (e) => {
-    console.log(e.target.value);
     this.setState({ subject: e.target.value });
   };
+
   setmessage = (e) => {
     this.setState({ message: e.target.value });
   };
@@ -52,22 +57,32 @@ class Contacts extends Component {
 
     return form.reportValidity();
   };
+
   showModal = (e) => {
     if (this.validate()) {
       e.preventDefault();
       this.setState({ modalIsOpen: true });
     }
   };
-  closeModal = (e) => {
+
+  closeModal = () => {
     this.setState({ modalIsOpen: false });
   };
+
   render() {
-    console.log(this.props);
+    const {
+      modalIsOpen,
+      name,
+      email,
+      phone,
+      subject,
+      message,
+    } = this.state;
     return (
       <>
         <Navbar />
         <div className="banner">
-          <h5 className="breadcreamb">首頁>聯絡我們</h5>
+          <h5 className="breadcreamb">首頁 &gt; 聯絡我們</h5>
           <h2 className="contactTitle">有任何問題嗎?馬上連絡我們!</h2>
         </div>
         <section className="container contactMsg">
@@ -85,7 +100,7 @@ class Contacts extends Component {
                 <p>統編：24536806</p>
               </div>
             </div>
-            <div className="map"></div>
+            <div className="map" />
           </div>
           <div className="contactRight pt-2">
             <p>任何問題都歡迎您透過以下表單詢問，我們會盡快回覆您！</p>
@@ -94,19 +109,19 @@ class Contacts extends Component {
                 placeholder="名字"
                 required
                 onChange={this.setname}
-              ></input>
+              />
               <input
                 type="email"
                 placeholder="信箱"
                 required
                 onChange={this.setemail}
-              ></input>
+              />
               <input
                 type="number"
                 placeholder="電話"
                 required
                 onChange={this.setphone}
-              ></input>
+              />
               <select onChange={this.setsubject}>
                 <option defaultValue="selected">請選擇主題</option>
                 <option>專案開發</option>
@@ -116,14 +131,14 @@ class Contacts extends Component {
               <textarea
                 placeholder="請留下你的訊息"
                 onChange={this.setmessage}
-              ></textarea>
+              />
               {/* 我不是機器人驗證 */}
-              <button onClick={this.showModal} className="contactbtn">
+              <button type="submit" onClick={this.showModal} className="contactbtn">
                 送出
               </button>
             </form>
             <Modal
-              isOpen={this.state.modalIsOpen}
+              isOpen={modalIsOpen}
               onRequestClose={this.closeModal}
               style={this.customStyles}
               contentLabel="Example Modal"
@@ -132,27 +147,27 @@ class Contacts extends Component {
                 <input
                   placeholder="名字"
                   disabled
-                  defaultValue={this.state.name}
-                ></input>
+                  defaultValue={name}
+                />
                 <input
                   type="email"
                   placeholder="信箱"
                   disabled
-                  defaultValue={this.state.email}
-                ></input>
+                  defaultValue={email}
+                />
                 <input
                   type="number"
                   placeholder="電話"
                   disabled
-                  defaultValue={this.state.phone}
-                ></input>
+                  defaultValue={phone}
+                />
                 <select disabled>
-                  <option>{this.state.subject}</option>
+                  <option>{subject}</option>
                 </select>
                 <textarea
                   placeholder="請留下你的訊息"
-                  defaultValue={this.state.message}
-                ></textarea>
+                  defaultValue={message}
+                />
                 {/* 我不是機器人驗證 */}
                 <button type="submit" className="contactbtn">
                   送出
