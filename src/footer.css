@@ -1,0 +1,36 @@
+/* footer */
+.footImg {
+    width: 300px;
+  }
+  .footImg img {
+    filter: grayscale(100%);
+    width: 100%;
+  }
+  .footImg :nth-child(1):hover img {
+    filter: grayscale(0);
+  }
+  .footImg :nth-child(2):hover img {
+    filter: grayscale(0);
+  }
+  
+  .footLink {
+    flex-wrap: wrap;
+    padding-left: 2rem;
+  }
+  
+  .footLink li {
+    margin: 6px;
+  }
+  
+  .footLink li a {
+    word-break: keep-all;
+  }
+  
+  .contactInfo {
+    padding-left: 2rem;
+  }
+  
+  .copyright {
+    text-align: center;
+  }
+  

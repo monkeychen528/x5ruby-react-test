@@ -4,6 +4,7 @@ import 'bootstrap';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import Content from './components/Content';
 import Contacts from './components/Contacts';
+import RamenMap from './components/RamenMap';
 
 function App() {
   return (
@@ -11,13 +12,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Content} />
         <Route exact path="/contacts" component={Contacts} />
-        <Route exact path="/onlineLesson" />
-        <Route exact path="/camping" />
-        <Route exact path="/quickstartLesson" />
-        <Route exact path="/projectDev" />
-        <Route exact path="/componyTrain" />
-        <Route exact path="/buySpace" />
-        <Route exact path="/news" />
+        <Route exact path="/ramenMap" component={RamenMap} />
+
       </Switch>
     </Router>
   );

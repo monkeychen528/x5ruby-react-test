@@ -6,6 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public'), // 此為輸出的位置，通常跟index.html一起輸出
     filename: 'bundle.js',
+    publicPath: 'public/',
   },
   module: {
     // rules的值是一個陣列可以存放多個loader物件
@@ -25,11 +26,26 @@ module.exports = {
         test: /\.css$/,
         loaders: ['style-loader', 'css-loader'], // css編譯完才會是style，loader編譯順序是右到左
       },
+      {
+        test: /\.(png|jpg|gif|jpe?g|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              publicPath: '/images',
+              outputPath: 'images/',
+              emitFile: false,
+            },
+          },
+        ],
+      },
     ],
   },
   devServer: {
     // 指定開啟port為3000
     port: 3000,
+
   },
 };
 

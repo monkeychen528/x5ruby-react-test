@@ -1,6 +1,6 @@
 .banner {
   min-height: 100%;
-  background: linear-gradient(to left top, rgb(195, 0, 120), red);
+  background: linear-gradient(to left top, rgb(255, 128, 105), rgb(255, 0, 55));
   color: white;
   padding: 4rem;
   display: flex;
@@ -9,6 +9,7 @@
   flex-flow: column wrap;
 }
 .contactMsg {
+  margin-top: 100px;
   display: flex;
   justify-content: space-between;
   font-size: 0.8rem;
@@ -31,7 +32,7 @@ form {
   background: gray;
 }
 .contactbtn {
-  background: rgb(195, 0, 120);
+  background: rgb(112, 57, 5);
   border: 0 transparent;
   border-radius: 6px;
   color: white;

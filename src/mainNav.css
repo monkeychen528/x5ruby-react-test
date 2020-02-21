@@ -1,0 +1,58 @@
+
+  
+  .logo {
+    flex-shrink: 0;
+    width: 100px;
+    display: flex;
+  }
+  
+  .logo img {
+    width: 100%;
+    object-fit: scale-down;
+  }
+  
+  .mynav{
+    display: flex;
+    padding:0;
+    margin:0;
+  }
+  .mynav li {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .mynav li:nth-child(2) {
+    flex: 1 0 10%;
+  }
+  
+  #tagEvent {
+    display: inline-block;
+    padding: 3px 6px;
+    background: maroon;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    animation: gorotate 0.8s alternate infinite forwards;
+    transform-origin: top left;
+  }
+  
+  header li a {
+    padding: 6px;
+    color: rgb(235, 251, 209);
+    display: inline-block;
+    width: 100%;
+  }
+  
+  #burger {
+    display: none;
+  }
+  #mobilenav {
+    width: 150px;
+    display: none;
+    margin: 0 auto;
+  }
+  
+  #mobilenav li {
+    margin-bottom: 12px;
+  }
+  

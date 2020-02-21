@@ -1,262 +1,359 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import $ from "jquery";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import { Link, useRouteMatch } from "react-router-dom";
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import React, {
+  useState, useEffect, useCallback, useRef, useReducer,
+} from 'react';
+
+import $ from 'jquery';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import Article from './Article';
+import '../content.css';
+// import '../mainNav.css';
+
+const initialState = { num: 0, jump: null };
+
 const Content = () => {
-  let [rwdWidth, setRwdWidth] = useState(0);
-  let [num, setNum] = useState(0);
-  let [stnum, setStnum] = useState(0);
-  let [lesson, setLesson] = useState([]);
-  let [warning, setWarning] = useState(true);
+  const [rwdWidth, setRwdWidth] = useState(0);
+  // const [num, setNum] = useState(0);
+  const [stnum, setStnum] = useState(0);
+  const [lesson, setLesson] = useState([]);
+  // const [test, setTest] = useState(true);
+  // const { jump } = state;
+  // 分隔線
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const body = document.querySelector('body');
 
-  let body = document.querySelector("body");
-  let circle = document.querySelectorAll(".circle");
-  let carouselImg = document.querySelectorAll(".carousel-img");
 
-  //requst API
-  useEffect(() => {
-    if (warning) {
-      alert("此為測試，圖像皆為五倍紅寶石授權");
-      setWarning(false);
+  const savedCallback = useRef();
+  // const imgWidth = carouselImg
+  const bigCarousel = (i = state.num) => {
+    const circle = document.querySelectorAll('.circle');
+    const carouselImg = document.querySelectorAll('.carousel-img');
+    // console.log(i);
+    $(circle[i])
+      .addClass('circleActive')
+      .siblings()
+      .removeClass('circleActive');
+    $(carouselImg[i]).css({
+      opacity: 1,
+
+    });
+    $('.carousel').css(
+      'transform', `translateX(${-i * carouselImg[i].offsetWidth}px)`, // 圖片疊圖片
+    );
+    if (i === carouselImg[i].length) return;
+    $(carouselImg[i]).siblings().css({
+      opacity: 0,
+    }, 1000);
+  };
+
+  function reducer(state, action) {
+    // action會去接disatch出來的東西
+    const { num, jump, todo } = state;
+    switch (action.type) {
+      case 'tick': {
+        // console.log(`tick:${num}`);
+        return {
+          // num: num === 3 ? 0 : num + 1,
+          num: action.num,
+          todo: action.todo(action.num),
+        };
+        // return state.num > 3 ? bigCarousel(0) : bigCarousel(state.num);
+      }
+      case 'jumpTo': {
+        // console.log(`jumpTo:${num}`);
+        return {
+          num: action.jump,
+          jump: action.jump,
+          // todo: action.function(num),
+        };
+      }
+      default:
+        return console.log('no');
     }
+  }
+
+
+  // const { num, jump } = state;
+
+  // requst API
+  useEffect(() => {
     if (lesson.length === 0) {
-      fetch("https://my-json-server.typicode.com/monkeychen528/demo/db")
+      fetch('  http://localhost:5000/star')
         .then((res) => res.json())
         .then((json) => {
-          setLesson(json.posts);
+          console.log(json);
+          setLesson(json);
         });
     }
-  }, [circle, lesson.length, warning]);
+  }, [lesson]);
 
   // 大版面跑馬燈
 
-  let bigCarousel = useCallback(
-    (num) => {
-      $(circle[num])
-        .addClass("circleActive")
-        .siblings()
-        .removeClass("circleActive");
-      $(carouselImg[num])
-        .animate(
-          {
-            left: "0px",
-            width: "100%"
-          },
-          0
-        )
-        .siblings()
-        .stop(true, true)
-        .animate(
-          {
-            left: body.offsetWidth,
-            width: 0
-          },
-          200
-        );
-
-      $(circle[num])
-        .css("background", "green")
-        .siblings()
-        .css("background", "rgb(144, 144, 144)");
-      if (num === 3) {
-        setNum(0);
-      } else {
-        setNum(num + 1);
-      }
-    },
-    [body.offsetWidth, carouselImg, circle]
-  );
 
   //   // 課程推薦跑馬燈
-  let smallCarousel = useCallback(
-    (stnum) => {
-      let students = document.querySelectorAll(".student");
-      $("#studentWrap").css("width", body.offsetWidth * students.length);
-      $("#studentWrap").css("marginLeft", -stnum * window.innerWidth + "px");
+  const smallCarousel = useCallback(
+    (k) => {
+      const students = document.querySelectorAll('.student');
+      $('#studentWrap').css('width', body.offsetWidth * students.length);
+      $('#studentWrap').css('marginLeft', `${-k * window.innerWidth}px`);
       // 設定ul總長跟裡面li圖片跑的距離
-      $(students[stnum])
-        .css("visibility", "")
+      $(students[k])
+        .css('visibility', '')
         .siblings()
-        .css("visibility", "hidden");
-      if (stnum === students.length) {
-        $("#studentWrap").css("marginLeft", body.offsetWidth + "px");
+        .css('visibility', 'hidden');
+      if (k === students.length) {
+        $('#studentWrap').css('marginLeft', `${body.offsetWidth}px`);
         setTimeout(() => {
-          $(students[0]).css("visibility", "");
-          $("#studentWrap").css("marginLeft", 0 + "px");
+          $(students[0]).css('visibility', '');
+          $('#studentWrap').css('marginLeft', `${0}px`);
         }, 500);
       }
-      if (stnum === 4) {
+      if (k === 3) {
         setStnum(0);
       } else {
-        setStnum(stnum);
+        setStnum(k + 1);
       }
     },
-    [body.offsetWidth]
+    [body.offsetWidth],
   );
 
-  let resizeWindow = useCallback(() => {
-    //  (window.innerWidth);
+  const resizeWindow = useCallback(() => {
     setRwdWidth(window.innerWidth);
     smallCarousel(stnum);
-  }, [smallCarousel, stnum]);
+    bigCarousel();
+  }, [smallCarousel, stnum, rwdWidth]);
 
-  let savedCallback = useRef();
+  const scrollWindow = () => {
+    const top = 0 || $(window).scrollTop();
 
-  useEffect(() => {
-    savedCallback.current = { bigCarousel, smallCarousel };
-  }, [bigCarousel, num, smallCarousel, stnum]);
-
-  useEffect(() => {
-    window.addEventListener("resize", resizeWindow);
-    // interval(num);
-    function interval() {
-      savedCallback.current.bigCarousel(num);
-      savedCallback.current.smallCarousel(stnum + 1);
+    // console.log(top);
+    switch (top > 0) {
+      case (top < 300 && top > 150): {
+        return $('.imgWrap').eq(0).addClass('leftIn');
+      }
+      case (top < 500 && top > 300): {
+        return $('.imgWrap').eq(1).addClass('rightIn');
+      }
+      case (top > 500): {
+        return $('.imgWrap').eq(2).addClass('leftIn');
+      }
+      default:
+        break;
     }
-
-    let run = setInterval(interval, 5000);
+    // if (top < 300 && top > 150) {
+    //   console.log('kjdflsdfjd')
+    //   $('.imgWrap').eq(0).addClass('leftIn');
+    // } else if (top < 500 && top > 300) {
+    //   $('.imgWrap').eq(1).addClass('rightIn');
+    // if ($(window).scrollTop() > 150) {
+    //   $('.imgWrap:even').addClass('leftIn');
+    //   // console.log(123456)
+    // }
+  };
+  useEffect(() => {
+    const scroll = window.addEventListener('scroll', scrollWindow);
     return () => {
-      window.removeEventListener("resize", resizeWindow);
-
-      clearInterval(run);
+      window.removeEventListener('scroll', scroll);
     };
-  }, [stnum, num, resizeWindow]);
+  });
 
-  if (lesson.length === 0) return "...載入中";
+
+  // useEffect(() => {
+  //   savedCallback.current = { bigCarousel, smallCarousel };
+  // }, [bigCarousel, num, smallCarousel, stnum]);
+  // 嘗試使用reducer,分離每秒換下一張跟滑鼠點擊更動state動作
+  useEffect(() => {
+    const { num } = state;
+    // console.log(`out:${num}`);
+    // interval裡面有自己的區塊外面值傳不到裡面，像官網的payload定義一個function，之後reducer呼叫
+    // dispatch介紹發出去的動作到reducer裡面是確保靜態的狀態(也就是更改狀態但不重render)
+    const interval = setInterval(() => {
+      dispatch({ type: 'tick', todo: bigCarousel, num: num === 3 ? 0 : num + 1 });
+    }, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [dispatch, state.num, state.jump]);
+
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeWindow);
+    //   function interval() {
+    //     console.log(num);
+    //     savedCallback.current.bigCarousel(num);
+    //     savedCallback.current.smallCarousel(stnum);
+    //   }
+    //   setTimeout(interval, 5000);
+    //   // };
+
+    return () => {
+      window.removeEventListener('resize', resizeWindow);
+    };
+  }, [stnum, resizeWindow]);
+
+  if (lesson.length === 0) return '...載入中';
+  // console.log(state);
   return (
     <>
-      <Navbar />
+      <Navbar page="page" />
       <main>
-        <div className="carousel-wrap position-relative container-fluid m-0 p-0">
+        <div className="carousel-wrap position-relative container-fluid ">
           <ul className="d-flex m-0 p-0">
             <li
               className="circle circleActive"
-              onClick={() => bigCarousel(0)}
-            ></li>
+              onClick={
+                () => {
+                  dispatch({
+                    jump: 0,
+                    type: 'jumpTo',
+                  });
+                  bigCarousel(0);
+                }
+              }
+              role="presentation"
+            />
             <li
               className="circle"
               onClick={() => {
+                dispatch({
+                  jump: 1,
+                  type: 'jumpTo',
+                  // function: bigCarousel,
+                });
                 bigCarousel(1);
               }}
-            ></li>
+              role="presentation"
+            />
             <li
               className="circle"
               onClick={() => {
+                dispatch({
+                  jump: 2,
+                  type: 'jumpTo',
+                  // function: bigCarousel,
+                });
                 bigCarousel(2);
               }}
-            ></li>
+              role="presentation"
+            />
             <li
               className="circle"
               onClick={() => {
+                dispatch({
+                  jump: 3,
+                  type: 'jumpTo',
+                  // function: bigCarousel,
+                });
                 bigCarousel(3);
               }}
-            ></li>
+              role="presentation"
+            />
           </ul>
-          <div className="carousel d-flex">
-            <Link to="#" className="carousel-img">
-              <img src="images/banner_astro-a839be5c.jpg" alt="" />
+          <div className="carousel d-flex" id="test">
+            <Link to="./" className="carousel-img">
+              <img src="images/ramen1.jpg" alt="" />
             </Link>
-            <Link to="" className="carousel-img">
-              <img src="images/banner_imcodingit-53a9a811.jpg" alt="" />
+            <Link to="./" className="carousel-img">
+              <img src="images/ramen2.jpg" alt="" />
             </Link>
-            <Link to="" className="carousel-img">
-              <img src="images/banner_mokumokukai-f9ec6b54.jpg" alt="" />
+            <Link to="./" className="carousel-img">
+              <img src="images/ramen3.jpg" alt="" />
             </Link>
-            <Link to="" className="carousel-img">
-              <img src="images/banner_5xruby-3d66d288.jpg" alt="" />
+            <Link to="./" className="carousel-img">
+              <img src="images/ramen5.jpg" alt="" />
             </Link>
           </div>
         </div>
         <section className="about">
-          <h2 className="title">關於五倍紅寶石 About 5xRuby</h2>
-          <div className="about container d-flex justify-content-between">
-            <figure>
-              <Link to="">
-                <img src="images/feature-list-img1-0d20ab19.png" alt="" />
+          <h2 className="title">關於拉麵</h2>
+          <div className="container-fluid">
+            <figure className="d-flex">
+              <div className=" imgWrap">
+                <img src="images/soup.jpg" alt="" />
                 <h4>
-                  網頁設計
-                  <br />
-                  前後端課程教學
+                  湯底
                 </h4>
+              </div>
+              <div className="rightIn">
                 <p>
-                  帶你掌握程式技能轉職工程師，城市課程從入門到進階讓你快速上手，學員好評推薦轉職課程!
+                  拉麵的湯底大多有基本的調味材料，再添加不同的額外材料，成為各式各樣的湯頭。此外使用各地區不同的食材，也產生當地獨特的口味，使拉麵成為深入日本各地的普遍食物。
+                  湯底的常見原料包括：雞肉、豬骨、牛骨、柴魚乾（鰹節）、青花魚乾、小魚乾、海帶、炒黃豆、香菇、洋蔥、蔥等等。拉麵湯通常需要連續燉煮數小時甚至數天。
+                  有些拉麵店使用或混用成桶買進的商業拉麵湯，這種做法方便且可以降低成本，但專門的拉麵饕客可以吃出其中的區別。
+                  湯底的口味一般來說可分為醬油味、豚骨（豬骨）味、鹽味、味噌味。
+                  此外，也有像擔擔麵一般使用唐辛子（辣椒）的辣味和芝麻口味的湯底、類似生馬麵（日本一種地方麵食）的醋味湯底，以及歐式風味的番茄湯底，甚至也有咖哩的口味。
+                  亦有不同味道的演變，例如魚介味，主要用作混搭雞、豚湯底，配以昆布能更有效帶出鮮味。
+                  由於穆斯林等因宗教信仰而不能食用含有豬肉的任何食品，因此也有店家開發完全不使用豚骨湯底及豬肉的拉麵
                 </p>
-              </Link>
+              </div>
             </figure>
-            <figure>
-              <Link to="">
-                <img src="images/feature-list-img2-26e4ca80.png" alt="" />
+            <figure className="d-flex">
+              <div className="leftIn">
+                <p>
+                  早期最普遍的拉麵是加上日式叉燒、筍子的醬油口味，但現在拉麵的口味也越來越多樣化。
+                  將使用手工或機械製作的麵條煮好，加上利用豬骨（日文：豚骨）或雞肉、蔬菜、小魚乾等熬煮的湯頭，大多都會再搭配日式叉燒、筍子、蔥花等配料。
+                  大部分的麵條都是使用麵粉（小麥粉、強力粉）、水、鹽，以及「鹼水」（日語：かんすい，又被音譯為「甘素」）為原料，顏色大多是黃色。
+                  鹼水是指碳酸鉀和碳酸鈉的混合物（有時也會加入磷酸）。這是由於曾有人使用內蒙古的湖水來製作麵條，
+                  結果發現麵條變得更加好吃，因此研究了湖水的成份之後，發展出了這樣的配方。
+                  鹼水是屬於鹼性，會讓麵粉中的穀蛋白黏膠質產生性質變化，讓麵條具有光澤感和增加彈性，也會讓麵粉中的黃酮類變成黃色，讓麵條具有獨特的顏色。
+                </p>
+              </div>
+              <div className="imgWrap">
+                <img src="images/namamen1.png" alt="" />
                 <h4>
-                  頂尖技術
-                  <br />
-                  網頁製作、專案開發
+                  麵條
                 </h4>
-                <p>
-                  網站開發到行動裝置App工程服務、系統設計開發甚至系統架設，提供專業的建議與頂尖的技術
-                </p>
-              </Link>
+              </div>
             </figure>
-            <figure>
-              <Link to="">
-                <img src="images/feature-list-img3-d0a4089e.png" alt="" />
-                <h4>資訊軟體開發技術顧問</h4>
-                <p>
-                  協助您將現有人力快速打造為Ruby/Rails團隊，無須經歷繁瑣的人才招募就有即戰力!
-                </p>
-              </Link>
-            </figure>
-            <figure>
-              <Link to="">
-                <img src="images/feature-list-img4-13321bf0.png" alt="" />
-                <h4>
-                  前後端工程師
-                  <br />
-                  社群經營
-                </h4>
-                <p>
-                  Ruby社群經營、舉辦各類活動，促進Ruby社群發展，歡迎前後端工程師分享交流
-                </p>
-              </Link>
+            <figure className="d-flex">
+              <div className="imgWrap">
+                <img src="images/dish.jpg" alt="" />
+                <h4>配料</h4>
+              </div>
+              <p>
+                麵上通常會放上的配料包括：叉燒肉、海苔、豆芽、白菜、雞蛋、蒜末、筍、魚板、玉米粒、雪菜、土豆、燉肉、酸梅等等。最後可以再加一些香油或者香辛料。
+              </p>
             </figure>
           </div>
         </section>
         <div className="content container">
-          <h2 className="title"> 熱門網頁設計課程推薦</h2>
+          <h2 className="title"> 拉麵星星推薦</h2>
           <div className="cardwrap ">
-            {lesson.map((el) => {
-              return (
-                <Link key={el.id} to="" className="myCard">
-                  <img src="images/ruby-on-rails-7c597107.jpg" alt="" />
-                  <div className="cardContent">
-                    <h5>{el.title}</h5>
-                    <p>{el.time}</p>
-                    <p className="lessoninfo">{el.info}</p>
-                    講者:{el.speaker}
-                  </div>
-                </Link>
-              );
-            })}
+            {lesson.map((el) => (
+              <Link key={el.id} to="./" className="myCard">
+                <div className="cardCap">
+                  <img src={`images/${el.img}`} alt="" />
+                </div>
+                <div className="cardContent">
+                  <h5>{el.title}</h5>
+                  <p>{el.time}</p>
+                  分數:
+                  {el.point}
+                </div>
+              </Link>
+            ))}
           </div>
-          <Link to="" className="lessonLink">
-            看更多網頁課程
+          <Link to="./" className="lessonLink">
+            看更多推薦
           </Link>
         </div>
       </main>
       <article>
-        <section className="recommend my-5">
+        {/* <section className="recommend my-5">
           <div className="recommendWrap position-relative container-fluid">
             <h2 className="title"> 網頁課程推薦</h2>
             <ul className="st-circleWrap d-flex m-0 p-0">
-              <li className="st-circle" onClick={() => smallCarousel(0)}></li>
-              <li className="st-circle" onClick={() => smallCarousel(1)}></li>
-              <li className="st-circle" onClick={() => smallCarousel(2)}></li>
-              <li className="st-circle" onClick={() => smallCarousel(3)}></li>
+              <li className="st-circle" onClick={() => smallCarousel(0)} />
+              <li className="st-circle" onClick={() => smallCarousel(1)} />
+              <li className="st-circle" onClick={() => smallCarousel(2)} />
+              <li className="st-circle" onClick={() => smallCarousel(3)} />
             </ul>
             <ul id="studentWrap" className=" d-flex">
               <li className="student d-flex">
                 <div className="st-ImgWrap">
-                  <img src="images/johnsie-7322ca81.jpg" alt="" />
+                  <img src="images/ramen2.jpg" alt="" />
                 </div>
                 <p className="recommendInfo">
                   選擇程式語言很重要，但選擇優秀的導師更重要！能跟擁有多年
@@ -271,7 +368,7 @@ const Content = () => {
               </li>
               <li className="student d-flex">
                 <div className="st-ImgWrap">
-                  <img src="images/victor-3ec52916.jpg" alt="" />
+                  <img src="images/ramen3.jpg" alt="" />
                 </div>
                 <p className="recommendInfo">
                   Eddie and his team are of the most dedicated Ruby evangelists
@@ -286,7 +383,7 @@ const Content = () => {
               </li>
               <li className="student d-flex">
                 <div className="st-ImgWrap">
-                  <img src="images/hana-4ae009cb.jpg" alt="" />
+                  <img src="images/ramen4.jpg" alt="" />
                 </div>
                 <p className="recommendInfo">
                   慕凡和龍哥是業界數一數二的 Ruby
@@ -300,7 +397,7 @@ const Content = () => {
               </li>
               <li className="student d-flex">
                 <div className="st-ImgWrap">
-                  <img src="images/jason-e7e95cad.jpg" alt="" />
+                  <img src="images/ramen5.jpg" alt="" />
                 </div>
                 <p className="recommendInfo">
                   選擇程式語言很重要，但選擇優秀的導師更重要！能跟擁有多年
@@ -311,55 +408,14 @@ const Content = () => {
               </li>
             </ul>
           </div>
-        </section>
+        </section> */}
         <section className="container">
-          <h2 className="title"> 案例作品Showcase</h2>
+          <h2 className="title">食記文章</h2>
           <div className=" d-flex justify-content-between">
-            <div className="cardwrap ">
-              <Link to="" className="myCard">
-                <img src="images/space_next_door-4dfdfeb6.png" alt="" />
-                <div className="cardContent">
-                  <h5>跨境電商shopastic</h5>
-                  <p>
-                    Shopmatic manages the entire ecosystem for anyone wanting to
-                    sell online. We go the extra mile to ensure that we help you
-                    in every step of the process to grow your business online -
-                    from developing your own unique webstore, to listing you on
-                    marketplaces and social channels, to providing you insights
-                    on how to sell online.
-                  </p>
-                </div>
-              </Link>
-              <Link to="" className="myCard">
-                <img src="images/shopmatic-92ff9dcf.jpg" alt="" />
-                <div className="cardContent">
-                  <h5>shopmastic</h5>
-                  <p>
-                    Shopmatic Go is an exciting online platform where you can
-                    create a unique and comprehensive online store for your
-                    business, in a matter of minutes.
-                  </p>
-                </div>
-              </Link>
-              <Link to="" className="myCard">
-                <img src="images/shopmatic_go-f7b86d46.png" alt="" />
-                <div className="cardContent">
-                  <h5>space next door</h5>
-                  <p>
-                    Space Next Door is inspired by the sharing economy in which
-                    we hope to encourage people to put up their unused space so
-                    that users looking for personal or business storage space
-                    have better options, closer to where they need it. We are
-                    striving to build a trusted community marketplace for you to
-                    list, discover and book the nearest and best space at
-                    affordable prices.!
-                  </p>
-                </div>
-              </Link>
-            </div>
+            <Article />
           </div>
-          <Link className="font-color" to="">
-            ...更多案例
+          <Link className="font-color" to="./">
+            ...更多文章
           </Link>
         </section>
       </article>
@@ -368,22 +424,22 @@ const Content = () => {
         <p>
           您可以看看
           <span>
-            <Link className="font-color" to="">
+            <Link className="font-color" to="/contacts">
               常見問題
             </Link>
           </span>
           或者直接
           <span>
-            <Link className="font-color" to={`/contacts`}>
+            <Link className="font-color" to="/contacts">
               線上洽詢
             </Link>
           </span>
-          ，會有親切的客服人員回答您的問題，也可以透過社群網站隨時關注我們的動態。
+          ，也可以透過社群網站隨時關注我們的動態。
         </p>
-        <Link to="" className="m-2">
+        <Link to="/contacts" className="m-2">
           <img src="images/icon-fb-2f24e7a0.png" alt="臉書網址" />
         </Link>
-        <Link to="" className="m-2">
+        <Link to="/contacts" className="m-2">
           <img src="images/icon-twitter-89f8d087.png" alt="官方twitter" />
         </Link>
       </div>

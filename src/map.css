@@ -1,0 +1,24 @@
+/* map */
+
+#map{
+    width: 75vw;
+    height: 100vh;
+  }
+  
+  .RdFilter{
+    display: flex;
+    align-items: center;
+    flex-basis: 25%;
+    flex-direction: column;
+    margin-top:83px;
+  }
+  .RdFilter select{
+    width:150px;
+    margin: 0 50% 12px;
+  }
+  .short{
+    animation: short 1s both ;
+  }
+  .toggleSlide{
+    animation: slidedown 1s forwards ;
+  }

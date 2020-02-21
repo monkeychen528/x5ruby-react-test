@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import '../Contacts.css';
+import '../contacts.css';
 
 Modal.setAppElement('#root');
 
@@ -27,7 +27,6 @@ class Contacts extends Component {
       name: '',
       email: '',
       phone: '',
-      subject: '',
       message: '',
     };
   }
@@ -42,10 +41,6 @@ class Contacts extends Component {
 
   setphone = (e) => {
     this.setState({ phone: e.target.value });
-  };
-
-  setsubject = (e) => {
-    this.setState({ subject: e.target.value });
   };
 
   setmessage = (e) => {
@@ -81,23 +76,23 @@ class Contacts extends Component {
     return (
       <>
         <Navbar />
-        <div className="banner">
+        {/* <div className="banner">
           <h5 className="breadcreamb">首頁 &gt; 聯絡我們</h5>
           <h2 className="contactTitle">有任何問題嗎?馬上連絡我們!</h2>
-        </div>
+        </div> */}
         <section className="container contactMsg">
           <div className="contactLeft pt-2">
-            <h2>五倍紅寶石股份有限公司</h2>
-            <p>10046 台北市中正區衡陽路 7 號 5 樓</p>
+            <h2>單純吃拉麵的紀錄</h2>
             <div className="row m-0">
               <div className="col-6 p-0">
-                <p>Tel：02-2331-5247</p>
-                <p>Mobile：0928-617-687</p>
-                <p>E-mail：hi@5xruby.tw</p>
-              </div>
-              <div className="col-6 p-0">
-                <p>Fax：02-2331-8717</p>
-                <p>統編：24536806</p>
+                <p>作者:陳以十</p>
+                <p>
+                  我的:
+                  <a href="https://github.com/monkeychen528">
+                    github
+                  </a>
+                </p>
+                <p>E-mail：monkeychen528@gmail.com</p>
               </div>
             </div>
             <div className="map" />
@@ -122,17 +117,11 @@ class Contacts extends Component {
                 required
                 onChange={this.setphone}
               />
-              <select onChange={this.setsubject}>
-                <option defaultValue="selected">請選擇主題</option>
-                <option>專案開發</option>
-                <option>技術諮詢</option>
-                <option>企業內訓</option>
-              </select>
               <textarea
                 placeholder="請留下你的訊息"
                 onChange={this.setmessage}
               />
-              {/* 我不是機器人驗證 */}
+              <div className="g-recaptcha" data-sitekey="6LceQNoUAAAAAGh_LcEkvu43qxaCiudBleGwjUn1" />
               <button type="submit" onClick={this.showModal} className="contactbtn">
                 送出
               </button>
@@ -161,9 +150,6 @@ class Contacts extends Component {
                   disabled
                   defaultValue={phone}
                 />
-                <select disabled>
-                  <option>{subject}</option>
-                </select>
                 <textarea
                   placeholder="請留下你的訊息"
                   defaultValue={message}
