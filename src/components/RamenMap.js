@@ -2,7 +2,7 @@ import React from 'react';
 import * as L from 'leaflet';
 import * as cityline from './associate.json';
 import * as cityRoad from './cityRoad.json';
-import Navbar from './Navbar';
+
 // import '../mapNav.css';
 import '../map.css';
 
@@ -11,7 +11,6 @@ export default class MyMap extends React.Component {
     super(props);
     this.state = {
       data: '請選擇縣市',
-      test: true,
     };
   }
 
@@ -55,14 +54,12 @@ export default class MyMap extends React.Component {
   //  綁定選擇縣市
   handleChange = (e) => {
     this.setState({ data: e.target.value });
-    this.setState({ test: false });
   }
 
   render() {
-    const { data, test } = this.state;
+    const { data } = this.state;
     return (
       <>
-        {test ? <Navbar page="map" /> : ''}
         <section>
           <div className="wrap d-flex justify-content-between">
             <div className="RdFilter">
