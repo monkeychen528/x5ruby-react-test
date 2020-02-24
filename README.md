@@ -1,68 +1,25 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-## 聯絡我們的連結，在想更了解我們的"線上洽詢"
-## Available Scripts
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app),but i want to test webpack setting
+so now this project have been ejected.
+## you can check the file webpack.config for compiler setting
 
-In the project directory, you can run:
+中文: 原本用create-react-app 建置的環境，但想測試關於webpack等架設方法及create-react-app裏頭設置的掛件，故eject並重新下載babel轉譯掛件
 
-### `yarn start`
+### About this project 
+This is a site for Ramen (ラーメン)　in Taiwan where i had eatten.
+I'm going todo is 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1.build the ramen data and record my thought (working)
+2.set the map to show the ramen store (working)
+3.set the comment system (todo)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### 關於這個專案
+之前有段時間蠻喜歡吃拉麵的，所以想記錄下來，並慢慢增加資料
+目前想做的事有
 
-### `yarn test`
+1.建立拉麵的資料及之前吃完後的一些感想(資料創建目前只有幾筆json-server可應付，之後考慮換成資料庫)
+2.創建一個地圖並顯示拉麵店的資料(正在趕工)
+3.搞一個討論系統(預計)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## welcome to discuss new technique or give me more info about ramen(lol)
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+有新技術或是願意技術指導的高人們歡迎留言，也歡迎提供關於拉麵的資訊
