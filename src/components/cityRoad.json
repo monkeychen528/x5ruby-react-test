@@ -2,6 +2,10 @@
     {
         "CityName": "臺北市",
         "CityEngName": "Taipei City",
+        "LatLng": {
+            "lat": 25.03746,
+            "lng": 121.564558
+        },
         "AreaList": [
             {
                 "ZipCode": "100",
@@ -68,6 +72,10 @@
     {
         "CityName": "基隆市",
         "CityEngName": "Keelung City",
+        "LatLng": {
+            "lat": 25.131596,
+            "lng": 121.743
+        },
         "AreaList": [
             {
                 "ZipCode": "200",
@@ -109,6 +117,10 @@
     {
         "CityName": "新北市",
         "CityEngName": "New Taipei City",
+        "LatLng": {
+            "lat": 25.014,
+            "lng": 121.464
+        },
         "AreaList": [
             {
                 "ZipCode": "207",
@@ -260,6 +272,10 @@
     {
         "CityName": "連江縣",
         "CityEngName": "Lienchiang County",
+        "LatLng": {
+            "lat": 26.158,
+            "lng": 119.95
+        },
         "AreaList": [
             {
                 "ZipCode": "209",
@@ -286,6 +302,10 @@
     {
         "CityName": "宜蘭縣",
         "CityEngName": "Yilan County",
+        "LatLng": {
+            "lat": 24.730715,
+            "lng": 121.763227
+        },
         "AreaList": [
             {
                 "ZipCode": "260",
@@ -355,19 +375,12 @@
         ]
     },
     {
-        "CityName": "釣魚臺",
-        "CityEngName": "Diauyutai",
-        "AreaList": [
-            {
-                "ZipCode": "290",
-                "AreaName": "釣魚臺",
-                "AreaEngName": "Diaoyutai"
-            }
-        ]
-    },
-    {
         "CityName": "新竹市",
         "CityEngName": "Hsinchu City",
+        "LatLng": {
+            "lat": 24.806616,
+            "lng": 120.968743
+        },
         "AreaList": [
             {
                 "ZipCode": "300",
@@ -389,6 +402,10 @@
     {
         "CityName": "新竹縣",
         "CityEngName": "Hsinchu County",
+        "LatLng": {
+            "lat": 24.826961,
+            "lng": 121.01298
+        },
         "AreaList": [
             {
                 "ZipCode": "308",
@@ -460,6 +477,10 @@
     {
         "CityName": "桃園市",
         "CityEngName": "Taoyuan City",
+        "LatLng": {
+            "lat": 24.993416,
+            "lng": 121.301025
+        },
         "AreaList": [
             {
                 "ZipCode": "320",
@@ -531,6 +552,10 @@
     {
         "CityName": "苗栗縣",
         "CityEngName": "Miaoli County",
+        "LatLng": {
+            "lat": 24.563507,
+            "lng": 120.820671
+        },
         "AreaList": [
             {
                 "ZipCode": "350",
@@ -627,6 +652,10 @@
     {
         "CityName": "臺中市",
         "CityEngName": "Taichung City",
+        "LatLng": {
+            "lat": 24.138504,
+            "lng": 120.678434
+        },
         "AreaList": [
             {
                 "ZipCode": "400",
@@ -778,6 +807,10 @@
     {
         "CityName": "彰化縣",
         "CityEngName": "Changhua County",
+        "LatLng": {
+            "lat": 24.075581,
+            "lng": 120.54468
+        },
         "AreaList": [
             {
                 "ZipCode": "500",
@@ -914,6 +947,10 @@
     {
         "CityName": "南投縣",
         "CityEngName": "Nantou County",
+        "LatLng": {
+            "lat": 23.91165,
+            "lng": 120.68747
+        },
         "AreaList": [
             {
                 "ZipCode": "540",
@@ -985,6 +1022,10 @@
     {
         "CityName": "嘉義市",
         "CityEngName": "Chiayi City",
+        "LatLng": {
+            "lat": 23.479036,
+            "lng": 120.441
+        },
         "AreaList": [
             {
                 "ZipCode": "600",
@@ -1001,6 +1042,10 @@
     {
         "CityName": "嘉義縣",
         "CityEngName": "Chiayi County",
+        "LatLng": {
+            "lat": 23.45865,
+            "lng": 120.293
+        },
         "AreaList": [
             {
                 "ZipCode": "602",
@@ -1097,6 +1142,10 @@
     {
         "CityName": "雲林縣",
         "CityEngName": "Yunlin County",
+        "LatLng": {
+            "lat": 23.6994,
+            "lng": 120.52638
+        },
         "AreaList": [
             {
                 "ZipCode": "630",
@@ -1203,6 +1252,10 @@
     {
         "CityName": "臺南市",
         "CityEngName": "Tainan City",
+        "LatLng": {
+            "lat": 22.992159,
+            "lng": 120.185097
+        },
         "AreaList": [
             {
                 "ZipCode": "700",
@@ -1394,6 +1447,10 @@
     {
         "CityName": "高雄市",
         "CityEngName": "Kaohsiung City",
+        "LatLng": {
+            "lat": 22.620662,
+            "lng": 120.311919
+        },
         "AreaList": [
             {
                 "ZipCode": "800",
@@ -1598,24 +1655,12 @@
         ]
     },
     {
-        "CityName": "南海島",
-        "CityEngName": "Nanhai",
-        "AreaList": [
-            {
-                "ZipCode": "817",
-                "AreaName": "東沙群島",
-                "AreaEngName": "Dongsha Islands"
-            },
-            {
-                "ZipCode": "819",
-                "AreaName": "南沙群島",
-                "AreaEngName": "Nansha Islands"
-            }
-        ]
-    },
-    {
         "CityName": "澎湖縣",
         "CityEngName": "Penghu County",
+        "LatLng": {
+            "lat": 23.572,
+            "lng": 119.5775
+        },
         "AreaList": [
             {
                 "ZipCode": "880",
@@ -1652,6 +1697,10 @@
     {
         "CityName": "金門縣",
         "CityEngName": "Kinmen County",
+        "LatLng": {
+            "lat": 24.4504,
+            "lng": 118.3774
+        },
         "AreaList": [
             {
                 "ZipCode": "890",
@@ -1688,6 +1737,10 @@
     {
         "CityName": "屏東縣",
         "CityEngName": "Pingtung County",
+        "LatLng": {
+            "lat": 22.68288,
+            "lng": 120.487994
+        },
         "AreaList": [
             {
                 "ZipCode": "900",
@@ -1859,6 +1912,10 @@
     {
         "CityName": "臺東縣",
         "CityEngName": "Taitung County",
+        "LatLng": {
+            "lat": 22.7555,
+            "lng": 121.1504
+        },
         "AreaList": [
             {
                 "ZipCode": "950",
@@ -1945,6 +2002,10 @@
     {
         "CityName": "花蓮縣",
         "CityEngName": "Hualien County",
+        "LatLng": {
+            "lat": 23.9925,
+            "lng": 121.6015
+        },
         "AreaList": [
             {
                 "ZipCode": "970",

@@ -17,8 +17,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react', '@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-class-properties'],
+            presets: ['@emotion/babel-preset-css-prop', '@babel/preset-react', '@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime', 'emotion'],
           },
         },
       },

@@ -2,27 +2,26 @@ import React from 'react';
 import * as L from 'leaflet';
 import * as cityline from './associate.json';
 import * as cityRoad from './cityRoad.json';
-
-// import '../mapNav.css';
 import '../map.css';
 
+// 暫解:map在didmount的時候生成，但外面的選項更動時也要能跳動，故map宣告在最外層
+let map = null;
 export default class MyMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       data: '請選擇縣市',
+      latlnt: undefined,
     };
   }
 
-
   componentDidMount() {
-    const map = L.map('map').setView([25.0491609, 121.4890514], 12);
+    map = L.map('map').setView([25.0491609, 121.4890514], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
     // mouse事件 顏色改變要看官網的屬性
     function changeColor(e) {
-      console.log(e);
       e.target.setStyle({ fillColor: 'blue' });
     }
     function changeBack(e) {
@@ -41,7 +40,6 @@ export default class MyMap extends React.Component {
     }
 
     // 搭配console看，leaflet 的onEachFeature會自動跑回圈綁上popup
-    console.log(cityline.features);
     L.geoJSON(cityline.features, {
       onEachFeature: EachFeature,
       style: {
@@ -52,8 +50,24 @@ export default class MyMap extends React.Component {
   }
 
   //  綁定選擇縣市
-  handleChange = (e) => {
-    this.setState({ data: e.target.value });
+  handleChange = async (e) => {
+    const ind = e.target.selectedIndex;
+    const city = document.querySelector('#city');
+    const lat = city.children[ind].dataset.place;
+    console.log();
+    this.setState({
+      data: e.target.value,
+    });
+    map.panTo(lat.split(','));
+    if (this.state.data !== e.target.value) {
+      try {
+        const res = await fetch('http://localhost:5000/star');
+        const json = await res.json();
+        console.log(json);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   render() {
@@ -63,10 +77,12 @@ export default class MyMap extends React.Component {
         <section>
           <div className="wrap d-flex justify-content-between">
             <div className="RdFilter">
-              <select onChange={this.handleChange}>
+              <select onChange={this.handleChange} id="city">
                 <option value={undefined}>請選擇縣市</option>
                 {cityRoad.map((item) => (
-                  <option key={item.CityName}>{item.CityName}</option>
+                  <option key={item.CityName} data-place={Object.values(item.LatLng)}>
+                    {item.CityName}
+                  </option>
                 ))}
               </select>
               {

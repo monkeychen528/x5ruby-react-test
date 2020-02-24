@@ -16,9 +16,3 @@
     width:150px;
     margin: 0 50% 12px;
   }
-  .short{
-    animation: short 1s both ;
-  }
-  .toggleSlide{
-    animation: slidedown 1s forwards ;
-  }

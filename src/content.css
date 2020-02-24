@@ -9,7 +9,7 @@
    overflow: hidden;
     max-width: 960px;
     height: 426px;
-    margin-top: 100px;
+    margin-top: 70px;
     margin-left: auto;
     padding: 0;
   }
@@ -149,6 +149,15 @@
   .cardContent {
     background: rgb(112, 57, 5);
     padding: 1rem 0.5rem;
+    min-height: 100%;
+  }
+
+  .cardContent p{
+    text-overflow: ellipsis;
+    -webkit-line-clamp:3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   
   .cardContent h5 {
@@ -240,3 +249,46 @@
     float: right;
   }
   
+  @media screen and ( max-width:991px ){
+  .content {
+    height: unset;
+  }
+
+  .about {
+    flex-direction: column;
+  }
+
+  .cardwrap {
+    align-items: center;
+    max-width: 800px;
+    height: 70%;
+    flex-wrap: wrap;
+  }
+
+  .myCard {
+    flex: 0 0 45%;
+    margin: 16px;
+  }
+
+  .st-ImgWrap {
+    margin: 10px;
+  }
+
+  .footerWrap div {
+    flex-direction: column;
+  }
+
+  .footImg {
+    width: 80vw;
+    padding-left: 40px;
+  }
+
+  .footLink {
+    padding-left: 40px;
+  }
+}
+@media screen and ( max-width:767px ){
+  .myCard {
+    flex: 0 1 100%;
+  }
+}

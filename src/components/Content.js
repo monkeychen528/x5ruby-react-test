@@ -1,16 +1,13 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, {
-  useState, useEffect, useCallback, useRef, useReducer,
+  useState, useEffect, useCallback, useReducer,
 } from 'react';
 
 import $ from 'jquery';
-import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
 import Footer from './Footer';
 import Article from './Article';
 import '../content.css';
-// import '../mainNav.css';
 
 const initialState = { num: 0, jump: null };
 
@@ -20,14 +17,14 @@ const Content = () => {
   const [stnum, setStnum] = useState(0);
   const [lesson, setLesson] = useState([]);
   // const [test, setTest] = useState(true);
-  // const { jump } = state;
+
   // 分隔線
   const [state, dispatch] = useReducer(reducer, initialState);
   const body = document.querySelector('body');
 
 
-  const savedCallback = useRef();
-  // const imgWidth = carouselImg
+  // const savedCallback = useRef();
+  // 大版面跑馬燈
   const bigCarousel = (i = state.num) => {
     const circle = document.querySelectorAll('.circle');
     const carouselImg = document.querySelectorAll('.carousel-img');
@@ -38,7 +35,6 @@ const Content = () => {
       .removeClass('circleActive');
     $(carouselImg[i]).css({
       opacity: 1,
-
     });
     $('.carousel').css(
       'transform', `translateX(${-i * carouselImg[i].offsetWidth}px)`, // 圖片疊圖片
@@ -48,13 +44,13 @@ const Content = () => {
       opacity: 0,
     }, 1000);
   };
-
+  // 嘗試使用reducer,分離每秒換下一張跟滑鼠點擊更動state動作
   function reducer(state, action) {
     // action會去接disatch出來的東西
-    const { num, jump, todo } = state;
     switch (action.type) {
       case 'tick': {
-        // console.log(`tick:${num}`);
+        // num 元件正在跑的位置
+        // todo 呼叫跑馬燈的fn
         return {
           // num: num === 3 ? 0 : num + 1,
           num: action.num,
@@ -63,20 +59,14 @@ const Content = () => {
         // return state.num > 3 ? bigCarousel(0) : bigCarousel(state.num);
       }
       case 'jumpTo': {
-        // console.log(`jumpTo:${num}`);
         return {
           num: action.jump,
-          jump: action.jump,
-          // todo: action.function(num),
         };
       }
       default:
         return console.log('no');
     }
   }
-
-
-  // const { num, jump } = state;
 
   // requst API
   useEffect(() => {
@@ -90,41 +80,38 @@ const Content = () => {
     }
   }, [lesson]);
 
-  // 大版面跑馬燈
-
-
-  //   // 課程推薦跑馬燈
-  const smallCarousel = useCallback(
-    (k) => {
-      const students = document.querySelectorAll('.student');
-      $('#studentWrap').css('width', body.offsetWidth * students.length);
-      $('#studentWrap').css('marginLeft', `${-k * window.innerWidth}px`);
-      // 設定ul總長跟裡面li圖片跑的距離
-      $(students[k])
-        .css('visibility', '')
-        .siblings()
-        .css('visibility', 'hidden');
-      if (k === students.length) {
-        $('#studentWrap').css('marginLeft', `${body.offsetWidth}px`);
-        setTimeout(() => {
-          $(students[0]).css('visibility', '');
-          $('#studentWrap').css('marginLeft', `${0}px`);
-        }, 500);
-      }
-      if (k === 3) {
-        setStnum(0);
-      } else {
-        setStnum(k + 1);
-      }
-    },
-    [body.offsetWidth],
-  );
+  // 課程推薦跑馬燈
+  // const smallCarousel = useCallback(
+  //   (k) => {
+  //     const students = document.querySelectorAll('.student');
+  //     $('#studentWrap').css('width', body.offsetWidth * students.length);
+  //     $('#studentWrap').css('marginLeft', `${-k * window.innerWidth}px`);
+  //     // 設定ul總長跟裡面li圖片跑的距離
+  //     $(students[k])
+  //       .css('visibility', '')
+  //       .siblings()
+  //       .css('visibility', 'hidden');
+  //     if (k === students.length) {
+  //       $('#studentWrap').css('marginLeft', `${body.offsetWidth}px`);
+  //       setTimeout(() => {
+  //         $(students[0]).css('visibility', '');
+  //         $('#studentWrap').css('marginLeft', `${0}px`);
+  //       }, 500);
+  //     }
+  //     if (k === 3) {
+  //       setStnum(0);
+  //     } else {
+  //       setStnum(k + 1);
+  //     }
+  //   },
+  //   [body.offsetWidth],
+  // );
 
   const resizeWindow = useCallback(() => {
     setRwdWidth(window.innerWidth);
-    smallCarousel(stnum);
+    //   smallCarousel(stnum);
     bigCarousel();
-  }, [smallCarousel, stnum, rwdWidth]);
+  }, [stnum, rwdWidth]);
 
   const scrollWindow = () => {
     const top = 0 || $(window).scrollTop();
@@ -143,15 +130,7 @@ const Content = () => {
       default:
         break;
     }
-    // if (top < 300 && top > 150) {
-    //   console.log('kjdflsdfjd')
-    //   $('.imgWrap').eq(0).addClass('leftIn');
-    // } else if (top < 500 && top > 300) {
-    //   $('.imgWrap').eq(1).addClass('rightIn');
-    // if ($(window).scrollTop() > 150) {
-    //   $('.imgWrap:even').addClass('leftIn');
-    //   // console.log(123456)
-    // }
+
   };
   useEffect(() => {
     const scroll = window.addEventListener('scroll', scrollWindow);
@@ -164,15 +143,18 @@ const Content = () => {
   // useEffect(() => {
   //   savedCallback.current = { bigCarousel, smallCarousel };
   // }, [bigCarousel, num, smallCarousel, stnum]);
-  // 嘗試使用reducer,分離每秒換下一張跟滑鼠點擊更動state動作
+
   useEffect(() => {
     const { num } = state;
     // console.log(`out:${num}`);
-    // interval裡面有自己的區塊外面值傳不到裡面，像官網的payload定義一個function，之後reducer呼叫
-    // dispatch介紹發出去的動作到reducer裡面是確保靜態的狀態(也就是更改狀態但不重render)
+    // interval裡面有自己的區塊外面值傳不到裡面，todo像官網的payload定義一個function，之後reducer呼叫
+    // dispatch介紹發出去的動作到reducer裡面是確保靜態的狀態(也就是更改狀態)
+    // num判斷state現在元件的位置
     const interval = setInterval(() => {
       dispatch({ type: 'tick', todo: bigCarousel, num: num === 3 ? 0 : num + 1 });
     }, 5000);
+    // 這邊每次在更改狀態後把舊的計數器清掉
+    // ex:今天記數+1，清舊的計時器，在生成畫面時啟動新的計時器，若此時用滑鼠點擊更動state，這邊depend知道num更動了，故清舊的計時器在產生新的
     return () => {
       clearInterval(interval);
     };
@@ -198,7 +180,6 @@ const Content = () => {
   // console.log(state);
   return (
     <>
-      <Navbar page="page" />
       <main>
         <div className="carousel-wrap position-relative container-fluid ">
           <ul className="d-flex m-0 p-0">
@@ -341,7 +322,18 @@ const Content = () => {
         </div>
       </main>
       <article>
-        {/* <section className="recommend my-5">
+        <section className="container">
+          <h2 className="title">食記文章</h2>
+          <div className=" d-flex justify-content-between">
+            <Article />
+          </div>
+          <Link className="font-color" to="./">
+            ...更多文章
+          </Link>
+        </section>
+      </article>
+      {/* 預計做留言區socket.io */}
+      {/* <section className="recommend my-5">
           <div className="recommendWrap position-relative container-fluid">
             <h2 className="title"> 網頁課程推薦</h2>
             <ul className="st-circleWrap d-flex m-0 p-0">
@@ -409,16 +401,6 @@ const Content = () => {
             </ul>
           </div>
         </section> */}
-        <section className="container">
-          <h2 className="title">食記文章</h2>
-          <div className=" d-flex justify-content-between">
-            <Article />
-          </div>
-          <Link className="font-color" to="./">
-            ...更多文章
-          </Link>
-        </section>
-      </article>
       <div className="contact container my-5">
         <h5>想更瞭解我們嗎？</h5>
         <p>
@@ -437,10 +419,10 @@ const Content = () => {
           ，也可以透過社群網站隨時關注我們的動態。
         </p>
         <Link to="/contacts" className="m-2">
-          <img src="images/icon-fb-2f24e7a0.png" alt="臉書網址" />
+          <i className="fab fa-facebook" />
         </Link>
         <Link to="/contacts" className="m-2">
-          <img src="images/icon-twitter-89f8d087.png" alt="官方twitter" />
+          <i className="fab fa-twitter" />
         </Link>
       </div>
       <Footer />
