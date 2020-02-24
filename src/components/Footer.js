@@ -1,5 +1,5 @@
 import React from 'react';
-import '../footer.css';
+import '../asset/footer.css';
 
 const Footer = () => (
   <footer className="footerWrap">

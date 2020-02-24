@@ -7,7 +7,7 @@ import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import Article from './Article';
-import '../content.css';
+import '../asset/content.css';
 
 const initialState = { num: 0, jump: null };
 

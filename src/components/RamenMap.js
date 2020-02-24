@@ -2,7 +2,7 @@ import React from 'react';
 import * as L from 'leaflet';
 import * as cityline from './associate.json';
 import * as cityRoad from './cityRoad.json';
-import '../map.css';
+import '../asset/map.css';
 
 // 暫解:map在didmount的時候生成，但外面的選項更動時也要能跳動，故map宣告在最外層
 let map = null;
