@@ -44,7 +44,7 @@ module.exports = {
   },
   devServer: {
     // 指定開啟port為3000
-    port: 3000,
+    port: 8000,
 
   },
 };

@@ -25,7 +25,7 @@ const Navbar = (props) => {
   const MainNav = styled.div`
   display: flex;
   justify-content: space-between;
-  position: ${() => (page === 'map' ? 'relative' : 'fixed')};
+  position: ${() => (page === 'content' ? 'fixed' : 'relative')};
   top: 0;
   width:100%;
   background: rgb(112, 57, 5);
@@ -107,6 +107,9 @@ const Navbar = (props) => {
             <li>
               <Link to="/contacts">聯絡我們</Link>
             </li>
+            <li>
+              <Link to="/comment">討論區</Link>
+            </li>
           </div>
           <div id="burger" onClick={() => show()} role="presentation">
             <div className="line" />
@@ -125,6 +128,9 @@ const Navbar = (props) => {
           </li>
           <li className="col ">
             <Link to="/contacts">聯絡我們</Link>
+          </li>
+          <li className="col ">
+            <Link to="/comment">討論區</Link>
           </li>
         </ul>
       </nav>
