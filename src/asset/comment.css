@@ -1,0 +1,26 @@
+.roomBody{
+    display: flex;
+}
+
+.roomBody aside{
+    flex-basis:30%;
+}
+
+.room:hover{
+    cursor: pointer;
+}
+
+.textWrap{
+    position: relative;
+    overflow-y: auto;
+    min-height: 80vh;
+    flex-basis: 50%;
+}
+
+#textBlock{
+    min-height: 100%;
+}
+
+.textWrap :last-child{
+    position: absolute;
+}
