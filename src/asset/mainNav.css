@@ -1,0 +1,99 @@
+/* Navbar.css */
+  .logo {
+    flex-shrink: 0;
+    width: 100px;
+    display: flex;
+  }
+   
+  .logo img {
+    width: 100%;
+    object-fit: scale-down;
+  }
+
+  .mynav{
+    display: flex;
+    padding:0;
+    margin:0;
+  }
+  .mynav li {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .mynav li:nth-child(2) {
+    flex: 1 0 10%;
+  }
+  
+  #tagEvent {
+    display: inline-block;
+    padding: 3px 6px;
+    background: maroon;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    animation: gorotate 0.8s alternate infinite forwards;
+    transform-origin: top left;
+  }
+  
+  header li a {
+    padding: 6px;
+    color: rgb(235, 251, 209);
+    display: inline-block;
+    width: 100%;
+  }
+  
+  #burger {
+    display: none;
+  }
+  #mobilenav {
+    width: 150px;
+    display: none;
+    margin: 0 auto;
+  }
+  
+  #mobilenav li {
+    margin-bottom: 12px;
+  }
+  /* rwd排版 */
+@media screen and (max-width: 1199px) {
+  .mynav li {
+    padding: 14px 0;
+    font-size: 0.7rem;
+  }
+  .about figure{
+    flex-direction: column;
+    align-items: center;
+  }
+  .about figure:nth-child(odd){
+    flex-direction: column-reverse;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .header {
+    padding-right: 0;
+  }
+
+  .mynav {
+    display: none;
+  }
+
+  #burger {
+    background: rgb(179, 0, 9);
+    width: 70px;
+    min-height: 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: column nowrap;
+    cursor: pointer;
+    padding: 16px;
+  }
+
+  .line {
+    background: white;
+    height: 10%;
+    width: 80%;
+    border-radius: 6px;
+  }
+}

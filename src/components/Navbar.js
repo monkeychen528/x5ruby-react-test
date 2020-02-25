@@ -6,7 +6,7 @@ import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import '../mainNav.css';
+import '../asset/mainNav.css';
 
 const show = () => {
   $('#mobilenav').slideToggle();
@@ -14,8 +14,6 @@ const show = () => {
 
 const Navbar = (props) => {
   const [toggleslide, setToggleslide] = useState(true);
-  const [headpage, setHeadpage] = useState('');
-
   const { page } = props;
   const body = document.querySelector('body');
   window.addEventListener('resize', () => {
@@ -27,7 +25,7 @@ const Navbar = (props) => {
   const MainNav = styled.div`
   display: flex;
   justify-content: space-between;
-  position: ${() => (page === 'map' ? 'relative' : 'fixed')};
+  position: ${() => (page === 'content' ? 'fixed' : 'relative')};
   top: 0;
   width:100%;
   background: rgb(112, 57, 5);
@@ -63,15 +61,14 @@ const Navbar = (props) => {
     }
   };
 
+  // 滑鼠滾動事件
   const scrollfn = useCallback(() => {
     const header = document.querySelector('#header');
     // console.log(header.className);
     if ($(window).scrollTop() > header.clientHeight) {
       setToggleslide(false);
-      setHeadpage(header.className);
     } else if ($(window).scrollTop() < $('#header').height()) {
       setToggleslide(true);
-      setHeadpage(header.className);
     }
     slideAnimate();
   }, [toggleslide]);
@@ -80,6 +77,16 @@ const Navbar = (props) => {
     return () => window.removeEventListener('scroll', scrollfn);
   });
 
+  // 滑鼠移入移出logo事件
+  const handleIn = () => {
+    setToggleslide(true);
+    slideAnimate();
+  };
+  const handleOut = () => {
+    setToggleslide(false);
+    slideAnimate();
+  };
+
   return (
     <>
       <header css={page === 'map' ? css`
@@ -87,7 +94,7 @@ const Navbar = (props) => {
           ` : ''}
       >
         <MainNav id="header">
-          <div className="logo">
+          <div className="logo" onMouseOver={handleIn} onMouseLeave={handleOut} onFocus={() => 0}>
             <img src="./images/logo.svg" alt="ramenLogo" />
           </div>
           <div className="mynav pl-0">
@@ -99,6 +106,9 @@ const Navbar = (props) => {
             </li>
             <li>
               <Link to="/contacts">聯絡我們</Link>
+            </li>
+            <li>
+              <Link to="/comment">討論區</Link>
             </li>
           </div>
           <div id="burger" onClick={() => show()} role="presentation">
@@ -118,6 +128,9 @@ const Navbar = (props) => {
           </li>
           <li className="col ">
             <Link to="/contacts">聯絡我們</Link>
+          </li>
+          <li className="col ">
+            <Link to="/comment">討論區</Link>
           </li>
         </ul>
       </nav>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import '../contacts.css';
+import '../asset/contacts.css';
 
 Modal.setAppElement('#root');
 
@@ -70,7 +70,6 @@ class Contacts extends Component {
       name,
       email,
       phone,
-      subject,
       message,
     } = this.state;
     return (
@@ -95,7 +94,9 @@ class Contacts extends Component {
                 <p>E-mail：monkeychen528@gmail.com</p>
               </div>
             </div>
-            <div className="map" />
+            <div className="userWrap">
+              <img src="/images/author.jpg" alt="" />
+            </div>
           </div>
           <div className="contactRight pt-2">
             <p>任何問題都歡迎您透過以下表單詢問，我們會盡快回覆您！</p>
