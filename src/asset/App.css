@@ -4,7 +4,7 @@ a {
 
 a:hover {
   text-decoration: none;
-  color: rgb(106, 218, 62);
+  color: #523405;
 }
 
 li {
@@ -28,6 +28,7 @@ li {
 .toggleSlide{
   animation: slidedown 1s forwards ;
 }
+
 
 @media screen and (max-width: 767px) {
   .recommendInfo {
