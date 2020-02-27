@@ -9,26 +9,24 @@ import Footer from './Footer';
 import Article from './Article';
 import '../asset/content.css';
 
-const initialState = { num: 0, jump: null };
+const initialState = { num: 0 };
 
 const Content = () => {
   const [rwdWidth, setRwdWidth] = useState(0);
   // const [num, setNum] = useState(0);
   const [stnum, setStnum] = useState(0);
   const [lesson, setLesson] = useState([]);
-  // const [test, setTest] = useState(true);
 
   // 分隔線
   const [state, dispatch] = useReducer(reducer, initialState);
   const body = document.querySelector('body');
 
-
   // const savedCallback = useRef();
   // 大版面跑馬燈
   const bigCarousel = (i = state.num) => {
-    const circle = document.querySelectorAll('.circle');
-    const carouselImg = document.querySelectorAll('.carousel-img');
     // console.log(i);
+    const carouselImg = document.querySelectorAll('.carousel-img');
+    const circle = document.querySelectorAll('.circle');
     $(circle[i])
       .addClass('circleActive')
       .siblings()
@@ -40,7 +38,7 @@ const Content = () => {
       'transform', `translateX(${-i * carouselImg[i].offsetWidth}px)`, // 圖片疊圖片
     );
     if (i === carouselImg[i].length) return;
-    $(carouselImg[i]).siblings().css({ 
+    $(carouselImg[i]).siblings().css({
       opacity: 0,
     }, 1000);
   };
@@ -178,10 +176,11 @@ const Content = () => {
 
   if (lesson.length === 0) return '...載入中';
   // console.log(state);
+  const tempData = ['山頭火', '鷹流', '凪', '鳥人'];
   return (
     <>
       <main>
-        <div className="carousel-wrap position-relative container-fluid ">
+        <div className="carousel-wrap position-relative">
           <ul className="d-flex m-0 p-0">
             <li
               className="circle circleActive"
@@ -236,19 +235,23 @@ const Content = () => {
           </ul>
           <div className="carousel d-flex">
             <Link to="./" className="carousel-img">
-              <img src="images/ramen1.jpg" alt="" />
+              <img src="images/ramen1.jpg" alt="山頭火" />
             </Link>
             <Link to="./" className="carousel-img">
-              <img src="images/ramen2.jpg" alt="" />
+              <img src="images/ramen2.jpg" alt="鷹流" />
             </Link>
             <Link to="./" className="carousel-img">
-              <img src="images/ramen3.jpg" alt="" />
+              <img src="images/ramen3.jpg" alt="凪" />
             </Link>
             <Link to="./" className="carousel-img">
-              <img src="images/ramen5.jpg" alt="" />
+              <img src="images/ramen5.jpg" alt="鳥人" />
             </Link>
           </div>
         </div>
+        <h2 className="title title-color">
+          今天想吃
+          {tempData[state.num]}
+        </h2>
         <div className="chopstickWrap">
           <img src="images/chopstick.png" alt="" />
         </div>
