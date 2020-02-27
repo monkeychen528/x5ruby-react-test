@@ -40,7 +40,7 @@ const Content = () => {
       'transform', `translateX(${-i * carouselImg[i].offsetWidth}px)`, // 圖片疊圖片
     );
     if (i === carouselImg[i].length) return;
-    $(carouselImg[i]).siblings().css({
+    $(carouselImg[i]).siblings().css({ 
       opacity: 0,
     }, 1000);
   };
@@ -196,6 +196,7 @@ const Content = () => {
               }
               role="presentation"
             />
+
             <li
               className="circle"
               onClick={() => {
@@ -233,7 +234,7 @@ const Content = () => {
               role="presentation"
             />
           </ul>
-          <div className="carousel d-flex" id="test">
+          <div className="carousel d-flex">
             <Link to="./" className="carousel-img">
               <img src="images/ramen1.jpg" alt="" />
             </Link>
@@ -248,6 +249,11 @@ const Content = () => {
             </Link>
           </div>
         </div>
+        <div className="chopstickWrap">
+          <img src="images/chopstick.png" alt="" />
+        </div>
+        {/* <img src="images/chopstick.png" alt="" />
+        <img src="images/chopstick.png" alt="" /> */}
         <section className="about">
           <h2 className="title">關於拉麵</h2>
           <div className="container-fluid">
@@ -300,7 +306,7 @@ const Content = () => {
           </div>
         </section>
         <div className="content container">
-          <h2 className="title"> 拉麵星星推薦</h2>
+          <h2 className="title title-color"> 拉麵星星推薦</h2>
           <div className="cardwrap ">
             {lesson.map((el) => (
               <Link key={el.id} to="./" className="myCard">

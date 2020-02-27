@@ -14,7 +14,9 @@ li {
 .font-color {
   color: rgb(224, 41, 41);
 }
-
+.title-color{
+  color: rgb(235, 251, 209);
+}
 /* contact */
 .contact {
   text-align: center;

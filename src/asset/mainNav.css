@@ -1,5 +1,6 @@
 /* Navbar.css */
-  .logo {
+
+.logo {
     flex-shrink: 0;
     width: 100px;
     display: flex;

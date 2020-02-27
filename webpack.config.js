@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public'), // 此為輸出的位置，通常跟index.html一起輸出
     filename: 'bundle.js',
-    publicPath: 'public/',
+    publicPath: '/public/',
   },
   module: {
     // rules的值是一個陣列可以存放多個loader物件

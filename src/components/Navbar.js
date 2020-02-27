@@ -28,7 +28,8 @@ const Navbar = (props) => {
   position: ${() => (page === 'content' ? 'fixed' : 'relative')};
   top: 0;
   width:100%;
-  background: rgb(112, 57, 5);
+  box-shadow: 2px 2px 3px rgb(10, 10, 39);
+  background: rgb(200, 80, 5);
   z-index: 3;
   transition: 1s;
   animation:${() => (page === 'map' ? 'toggleslide 3s forwards' : '')};
@@ -95,7 +96,9 @@ const Navbar = (props) => {
       >
         <MainNav id="header">
           <div className="logo" onMouseOver={handleIn} onMouseLeave={handleOut} onFocus={() => 0}>
-            <img src="./images/logo.svg" alt="ramenLogo" />
+            <Link to="/">
+              <img src="./images/logo.svg" alt="ramenLogo" />
+            </Link>
           </div>
           <div className="mynav pl-0">
             <li>
