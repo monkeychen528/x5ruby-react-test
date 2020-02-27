@@ -75,10 +75,6 @@ class Contacts extends Component {
     return (
       <>
         <Navbar />
-        {/* <div className="banner">
-          <h5 className="breadcreamb">首頁 &gt; 聯絡我們</h5>
-          <h2 className="contactTitle">有任何問題嗎?馬上連絡我們!</h2>
-        </div> */}
         <section className="container contactMsg">
           <div className="contactLeft pt-2">
             <h2>單純吃拉麵的紀錄</h2>

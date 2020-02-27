@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
+
 import React, {
   useState, useEffect, useCallback, useReducer,
 } from 'react';
@@ -21,7 +21,6 @@ const Content = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const body = document.querySelector('body');
 
-  // const savedCallback = useRef();
   // 大版面跑馬燈
   const bigCarousel = (i = state.num) => {
     // console.log(i);
@@ -50,11 +49,9 @@ const Content = () => {
         // num 元件正在跑的位置
         // todo 呼叫跑馬燈的fn
         return {
-          // num: num === 3 ? 0 : num + 1,
           num: action.num,
           todo: action.todo(action.num),
         };
-        // return state.num > 3 ? bigCarousel(0) : bigCarousel(state.num);
       }
       case 'jumpTo': {
         return {
@@ -78,36 +75,9 @@ const Content = () => {
     }
   }, [lesson]);
 
-  // 課程推薦跑馬燈
-  // const smallCarousel = useCallback(
-  //   (k) => {
-  //     const students = document.querySelectorAll('.student');
-  //     $('#studentWrap').css('width', body.offsetWidth * students.length);
-  //     $('#studentWrap').css('marginLeft', `${-k * window.innerWidth}px`);
-  //     // 設定ul總長跟裡面li圖片跑的距離
-  //     $(students[k])
-  //       .css('visibility', '')
-  //       .siblings()
-  //       .css('visibility', 'hidden');
-  //     if (k === students.length) {
-  //       $('#studentWrap').css('marginLeft', `${body.offsetWidth}px`);
-  //       setTimeout(() => {
-  //         $(students[0]).css('visibility', '');
-  //         $('#studentWrap').css('marginLeft', `${0}px`);
-  //       }, 500);
-  //     }
-  //     if (k === 3) {
-  //       setStnum(0);
-  //     } else {
-  //       setStnum(k + 1);
-  //     }
-  //   },
-  //   [body.offsetWidth],
-  // );
 
   const resizeWindow = useCallback(() => {
     setRwdWidth(window.innerWidth);
-    //   smallCarousel(stnum);
     bigCarousel();
   }, [stnum, rwdWidth]);
 
@@ -137,11 +107,6 @@ const Content = () => {
     };
   });
 
-
-  // useEffect(() => {
-  //   savedCallback.current = { bigCarousel, smallCarousel };
-  // }, [bigCarousel, num, smallCarousel, stnum]);
-
   useEffect(() => {
     const { num } = state;
     // console.log(`out:${num}`);
@@ -161,13 +126,6 @@ const Content = () => {
 
   useEffect(() => {
     window.addEventListener('resize', resizeWindow);
-    //   function interval() {
-    //     console.log(num);
-    //     savedCallback.current.bigCarousel(num);
-    //     savedCallback.current.smallCarousel(stnum);
-    //   }
-    //   setTimeout(interval, 5000);
-    //   // };
 
     return () => {
       window.removeEventListener('resize', resizeWindow);
@@ -255,8 +213,6 @@ const Content = () => {
         <div className="chopstickWrap">
           <img src="images/chopstick.png" alt="" />
         </div>
-        {/* <img src="images/chopstick.png" alt="" />
-        <img src="images/chopstick.png" alt="" /> */}
         <section className="about">
           <h2 className="title">關於拉麵</h2>
           <div className="container-fluid">
@@ -341,75 +297,6 @@ const Content = () => {
           </Link>
         </section>
       </article>
-      {/* 預計做留言區socket.io */}
-      {/* <section className="recommend my-5">
-          <div className="recommendWrap position-relative container-fluid">
-            <h2 className="title"> 網頁課程推薦</h2>
-            <ul className="st-circleWrap d-flex m-0 p-0">
-              <li className="st-circle" onClick={() => smallCarousel(0)} />
-              <li className="st-circle" onClick={() => smallCarousel(1)} />
-              <li className="st-circle" onClick={() => smallCarousel(2)} />
-              <li className="st-circle" onClick={() => smallCarousel(3)} />
-            </ul>
-            <ul id="studentWrap" className=" d-flex">
-              <li className="student d-flex">
-                <div className="st-ImgWrap">
-                  <img src="images/ramen2.jpg" alt="" />
-                </div>
-                <p className="recommendInfo">
-                  選擇程式語言很重要，但選擇優秀的導師更重要！能跟擁有多年
-                  Ruby/Rails 實戰經驗、活躍於社群的頂尖 Rubyist
-                  學習，將一窺程式開發殿堂之藝術！
-                  我堅信：專業事讓專業的來，而專業的「五倍紅寶石」是寶藏，就等大家來挖掘。
-                  <br />
-                  <strong>John Sie</strong>
-                  <br />
-                  Accuvally Inc.共同創辦人暨營運長
-                </p>
-              </li>
-              <li className="student d-flex">
-                <div className="st-ImgWrap">
-                  <img src="images/ramen3.jpg" alt="" />
-                </div>
-                <p className="recommendInfo">
-                  Eddie and his team are of the most dedicated Ruby evangelists
-                  I have ever come across. With their passion and
-                  professionalism, Ruby learners will leapfrog in their
-                  progress.
-                  <br />
-                  <strong>Jason Hs</strong>
-                  <br />
-                  founder of The Big Questions & TEDxTaipei
-                </p>
-              </li>
-              <li className="student d-flex">
-                <div className="st-ImgWrap">
-                  <img src="images/ramen4.jpg" alt="" />
-                </div>
-                <p className="recommendInfo">
-                  慕凡和龍哥是業界數一數二的 Ruby
-                  大師，他們不光是底子深厚，也很懂得引導、訓練學習路上遇到挫折的
-                  Ruby/Rails 學子。很慶幸有他們的協助讓我進入紅寶石的美妙世界。
-                  <br />
-                  <strong>Hana Chang</strong>
-                  <br />
-                  Co-Founder and CEO of BountyHunter
-                </p>
-              </li>
-              <li className="student d-flex">
-                <div className="st-ImgWrap">
-                  <img src="images/ramen5.jpg" alt="" />
-                </div>
-                <p className="recommendInfo">
-                  選擇程式語言很重要，但選擇優秀的導師更重要！能跟擁有多年
-                  Ruby/Rails 實戰經驗、活躍於社群的頂尖 Rubyist
-                  學習，將一窺程式開發殿堂之藝術！
-                  我堅信：專業事讓專業的來，而專業的「五倍紅寶石」是寶藏，就等大家來挖掘。
-                </p>
-              </li>
-            </ul>
-          </div>
-        </section> */}
       <div className="contact container my-5">
         <h5>想更瞭解我們嗎？</h5>
         <p>

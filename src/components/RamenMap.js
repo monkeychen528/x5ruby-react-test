@@ -54,7 +54,6 @@ export default class MyMap extends React.Component {
     const ind = e.target.selectedIndex;
     const city = document.querySelector('#city');
     const lat = city.children[ind].dataset.place;
-    console.log();
     this.setState({
       data: e.target.value,
     });
