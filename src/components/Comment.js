@@ -5,12 +5,12 @@ import '../asset/comment.css';
 
 const Comment = () => {
   const [ws, setWs] = useState(null);
-  const [room, setRoom] = useState(null);
+  const [room, setRoom] = useState('大廳');
   const msg = document.querySelector('#msg');
 
   const connectWebSocket = () => {
-    if (room) setWs(websocket('http://localhost:3000', { path: room }));
-    setWs(websocket('http://localhost:3000'));
+    if (room) setWs(websocket('http://localhost:3050', { path: room }));
+    setWs(websocket('http://localhost:3050'));
   };
   // 監聽送回的訊息
   const initWebSocket = () => {
@@ -35,7 +35,7 @@ const Comment = () => {
   // 送出訊息到websocket
   const sendMessage = () => {
     // console.log(room);
-    ws.emit(room ? 'changeroom' : 'getMessage',
+    ws.emit('changeroom',
       room ? { nowRoom: room, msg: msg.value } : msg.value);
   };
   // 更換房間
@@ -51,8 +51,18 @@ const Comment = () => {
     if (ws) {
       console.log('success');
       initWebSocket();
+    } else {
+      connectWebSocket();
     }
-    if (ws === null) connectWebSocket();
+    // 監聽如果離開頁面則發送disconnect
+    window.addEventListener('beforeunload', () => {
+      ws.emit('disconnected');
+    });
+    return () => {
+      window.removeEventListener('beforeunload', () => {
+        ws.emit('disconnected');
+      });
+    };
   }, [ws]);
 
 
@@ -64,6 +74,7 @@ const Comment = () => {
         <aside>
           <div className="roomWrap">
             <ul>
+              <li className="room" onClick={changeRoom} role="presentation">大廳</li>
               <li className="room" onClick={changeRoom} role="presentation">房間一</li>
               <li className="room" onClick={changeRoom} role="presentation">房間二</li>
               <li className="room" onClick={changeRoom} role="presentation">房間三</li>
