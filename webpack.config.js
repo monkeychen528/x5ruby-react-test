@@ -4,11 +4,11 @@ const webpack = require('webpack');
 module.exports = {
   entry: ['./src/index.js'],
   output: {
-    path: path.resolve(__dirname, 'public'), // 此為輸出的位置，通常跟index.html一起輸出
+    path: path.resolve(__dirname, '/public'), // 此為輸出的位置，通常跟index.html一起輸出
     filename: 'bundle.js',
-    publicPath: '/public/',
+    // publicPath: '/public/', // 尋找資源的路由
   },
-  module: {
+  module: { // module指的是 模組引入語法統一
     // rules的值是一個陣列可以存放多個loader物件
     rules: [
       {
@@ -32,10 +32,10 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[ext]',
-              publicPath: '/images',
+              name: '[name]-[hash].[ext]',
+              publicPath: './images',
               outputPath: 'images/',
-              emitFile: false,
+              emitFile: true,
             },
           },
         ],
@@ -44,7 +44,7 @@ module.exports = {
   },
   devServer: {
     // 指定開啟port為3000
-    port: 8000,
+    port: 8001,
 
   },
 };

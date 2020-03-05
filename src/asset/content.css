@@ -1,7 +1,7 @@
 
   /* content carousel */
   main{
-    background-image:url('/images/wood1.jpg');
+    background-image:url('../../images/wood1.jpg');
     background-repeat: repeat;
   }
   .carousel-wrap {

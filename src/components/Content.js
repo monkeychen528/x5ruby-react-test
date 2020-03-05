@@ -131,9 +131,9 @@ const Content = () => {
 
   };
   useEffect(() => {
-    const scroll = window.addEventListener('scroll', scrollWindow);
+    window.addEventListener('scroll', scrollWindow);
     return () => {
-      window.removeEventListener('scroll', scroll);
+      window.removeEventListener('scroll', scrollWindow);
     };
   });
 
