@@ -8,6 +8,7 @@
     background: linear-gradient(to top, rgb(27, 26, 26), rgb(25, 25, 42));
 }
 
+/* 右邊文字區塊container */
 .roomBody aside+div{
     width: 100%;
     padding: 1rem;
@@ -25,24 +26,36 @@
 .room:hover{
     background: rgb(200,80,5) ;
     cursor: pointer;
-    color: rgb(27, 26, 26);
-    border-radius: 20px;
+    border-radius: 25px;
 }
 
 .textWrap{
     position: relative;
     overflow-y: auto;
     min-height: 80vh;
-   
+    
 }
-.textWrap + input{
+/* .textWrap + input{
     width: 85%;
-}
+} */
 
 #textBlock{
     min-height: 100%;
+    width: 60vw;
+    overflow-wrap: break-word;
 }
 
-.textWrap :last-child{
-    position: absolute;
+/* 打字textarea */
+.typeWrap{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.typeWrap textarea{
+    width: 85%;
+    height: 36px;
+    resize: none;
+    overflow: hidden;
+    word-wrap: break-word;
+    padding: 0;
 }

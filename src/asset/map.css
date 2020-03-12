@@ -1,6 +1,12 @@
 /* map */
 
-#map{
+  .wrapMap{
+    height: 100vh;
+    display: flex; 
+    justify-content:space-between;
+    overflow: hidden;
+  }
+  #map{
     width: 75vw;
     height: 100vh;
   }
@@ -26,5 +32,6 @@
 
   .RdFilter figure a img{
     width:100%;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
   }

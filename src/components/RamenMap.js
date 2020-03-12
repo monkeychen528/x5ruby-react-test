@@ -56,32 +56,35 @@ export default class MyMap extends React.Component {
     const ind = e.target.selectedIndex; // 取出選取的城市 為selected 的位置
     const city = document.querySelector('#city');
     const lat = city.children[ind].dataset.place; // select標籤下的option有selected並取出dataset值
-    this.setState({
-      selected: e.target.value,
-    });
+    // 如果選擇選為初始狀態資料都改為初始
+    if (lat === undefined) {
+      this.setState({
+        selected: city.value,
+        data: [],
+      });
+      return;
+    }
     map.panTo(lat.split(','));// 經緯度從逗號切開
 
-    const { selected } = this.state;
-    if (selected !== e.target.value) {
-      try {
-        const res = await fetch('http://localhost:5000/star');
-        const json = await res.json();
-        this.setState({
-          data: json,
-        });
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const res = await fetch('http://localhost:5000/star');
+      const json = await res.json();
+      this.setState({
+        selected: city.value,
+        data: json,
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 
   render() {
     const { data, selected } = this.state;
-    console.log(data);
+    console.log(this.state);
     return (
       <>
         <section>
-          <div className="wrap d-flex justify-content-between">
+          <div className="wrapMap">
             <div className="RdFilter">
               <select onChange={this.handleChange} id="city">
                 <option value={undefined}>請選擇縣市</option>
@@ -112,13 +115,13 @@ export default class MyMap extends React.Component {
                 data ? data.map((item) => (
                   <figure key={item.id}>
                     <Link to="./">
-                      <img src={'images/' + item.img} alt="" />
+                      <img src={`images/${item.img}`} alt="" />
                       <h4>
                         {item.title}
+                        <small>
+                          {`  評分: ${item.point}`}
+                        </small>
                       </h4>
-                      <p>
-                        {item.point}
-                      </p>
                     </Link>
                   </figure>
                 )) : ''
