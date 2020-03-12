@@ -56,12 +56,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/monkeychen528/x5ruby-react-test.git"
+    "url": "git+https://github.com/monkeychen528/ramen.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/monkeychen528/x5ruby-react-test/issues"
+    "url": "https://github.com/monkeychen528/ramen/issues"
   },
   "homepage": "https://github.com/monkeychen528/ramen/public"
 }
