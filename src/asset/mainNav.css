@@ -18,7 +18,7 @@
   }
   .mynav li {
     padding: 0.5rem;
-    font-size: 0.8rem;
+    /* font-size: 0.8rem; */
   }
   
   .mynav li:nth-child(2) {
@@ -47,9 +47,15 @@
     display: none;
   }
   #mobilenav {
-    width: 150px;
+    width: 100%;
     display: none;
-    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    margin: 0 auto ;
+    background: white;
+    z-index: 1100;
   }
   
   #mobilenav li {
@@ -59,7 +65,6 @@
 @media screen and (max-width: 1199px) {
   .mynav li {
     padding: 14px 0;
-    font-size: 0.7rem;
   }
   .about figure{
     flex-direction: column;
@@ -71,8 +76,8 @@
 }
 
 @media screen and (max-width: 991px) {
-  .header {
-    padding-right: 0;
+  header #header{
+    animation: none !important;
   }
 
   .mynav {

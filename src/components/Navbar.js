@@ -9,7 +9,7 @@ import styled from '@emotion/styled';
 import '../asset/mainNav.css';
 
 const show = () => {
-  $('#mobilenav').slideToggle();
+  $('#mobilenav').slideToggle().css('display', 'flex');
 };
 
 const Navbar = (props) => {
@@ -62,7 +62,7 @@ const Navbar = (props) => {
     }
   };
 
-  // 滑鼠滾動事件
+  // 滑鼠滾動事件改變state讓nav伸縮
   const scrollfn = useCallback(() => {
     const header = document.querySelector('#header');
     // console.log(header.className);
@@ -121,18 +121,18 @@ const Navbar = (props) => {
           </div>
         </MainNav>
       </header>
-      <nav className="container-fluid">
+      <nav>
         <ul id="mobilenav" className="pl-0">
-          <li className="col">
+          <li>
             <Link to="/ramenMap">
               拉麵地圖
               <span id="tagEvent"> 新功能</span>
             </Link>
           </li>
-          <li className="col ">
+          <li>
             <Link to="/contacts">聯絡我們</Link>
           </li>
-          <li className="col ">
+          <li>
             <Link to="/comment">討論區</Link>
           </li>
         </ul>
