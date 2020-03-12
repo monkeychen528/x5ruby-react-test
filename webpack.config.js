@@ -42,28 +42,6 @@ module.exports = {
       },
     ],
   },
-  // 拆分js test 但這針對頁面不統以打包的狀況，也就是各個頁面最後不從index.js進入
-  // (需要htmlplugin自動帶入各頁面自己的js)
-  // optimization: {
-  //   splitChunks: {
-  //     chunks: 'all',
-  //     cacheGroups: {
-  //       reactBase: {
-  //         name: 'reactBase',
-  //         test: (module) => /react|redux|prop-types/.test(module.context),
-  //         chunks: 'initial',
-  //         priority: 10,
-  //       },
-  //       common: {
-  //         name: 'common',
-  //         chunks: 'initial',
-  //         priority: 2,
-  //         minChunks: 2,
-  //       },
-  //     },
-  //   },
-  // },
-  // 虛擬伺服器設置
   devServer: {
     // 指定開啟port為8000
     port: 8000,
