@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import ReCAPTCHA from 'react-google-recaptcha';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import '../asset/contacts.css';
+
+function onChange(value) {
+  console.log('Captcha value:', value);
+}
 
 Modal.setAppElement('#root');
 
@@ -29,6 +34,10 @@ class Contacts extends Component {
       phone: '',
       message: '',
     };
+  }
+
+  componentDidMount() {
+    // grecaptcha.reset();
   }
 
   setname = (e) => {
@@ -118,7 +127,11 @@ class Contacts extends Component {
                 placeholder="請留下你的訊息"
                 onChange={this.setmessage}
               />
-              <div className="g-recaptcha" data-sitekey="6LceQNoUAAAAAGh_LcEkvu43qxaCiudBleGwjUn1" />
+              <ReCAPTCHA
+                sitekey="6LceQNoUAAAAAGh_LcEkvu43qxaCiudBleGwjUn1"
+                onChange={onChange}
+              />
+              {/* <div className="g-recaptcha" data-sitekey="6LceQNoUAAAAAGh_LcEkvu43qxaCiudBleGwjUn1" /> */}
               <button type="submit" onClick={this.showModal} className="contactbtn">
                 送出
               </button>

@@ -1,17 +1,19 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import * as L from 'leaflet';
-import * as cityline from './associate.json';
-import * as cityRoad from './cityRoad.json';
+import cityline from './associate.json';
+import cityRoad from './cityRoad.json';
 import '../asset/map.css';
 
 // 暫解:map在didmount的時候生成，但外面的選項更動時也要能跳動，故map宣告在最外層
 let map = null;
+
 export default class MyMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: '請選擇縣市',
-      latlnt: undefined,
+      selected: '請選擇縣市',
+      data: [],
     };
   }
 
@@ -51,18 +53,22 @@ export default class MyMap extends React.Component {
 
   //  綁定選擇縣市
   handleChange = async (e) => {
-    const ind = e.target.selectedIndex;
+    const ind = e.target.selectedIndex; // 取出選取的城市 為selected 的位置
     const city = document.querySelector('#city');
-    const lat = city.children[ind].dataset.place;
+    const lat = city.children[ind].dataset.place; // select標籤下的option有selected並取出dataset值
     this.setState({
-      data: e.target.value,
+      selected: e.target.value,
     });
-    map.panTo(lat.split(','));
-    if (this.state.data !== e.target.value) {
+    map.panTo(lat.split(','));// 經緯度從逗號切開
+
+    const { selected } = this.state;
+    if (selected !== e.target.value) {
       try {
         const res = await fetch('http://localhost:5000/star');
         const json = await res.json();
-        console.log(json);
+        this.setState({
+          data: json,
+        });
       } catch (error) {
         console.log(error);
       }
@@ -70,7 +76,8 @@ export default class MyMap extends React.Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, selected } = this.state;
+    console.log(data);
     return (
       <>
         <section>
@@ -84,11 +91,12 @@ export default class MyMap extends React.Component {
                   </option>
                 ))}
               </select>
+              {/* 判斷上方城市是否有選擇，再判斷資料跟選擇城市是否相同 */}
               {
-                data !== '請選擇縣市' ? (
+                selected !== '請選擇縣市' ? (
                   <select className="toggleSlide">
                     {cityRoad.map((item) => (
-                      item.CityName === data ? (
+                      item.CityName === selected ? (
                         item.AreaList.map((dist) => (
                           <option key={dist.ZipCode}>
                             {dist.AreaName}
@@ -96,9 +104,24 @@ export default class MyMap extends React.Component {
                         ))
                       ) : '無資料'
                     ))}
-
                   </select>
                 ) : ''
+              }
+              {/* 判斷撈回是否有資料 */}
+              {
+                data ? data.map((item) => (
+                  <figure key={item.id}>
+                    <Link to="./">
+                      <img src={'images/' + item.img} alt="" />
+                      <h4>
+                        {item.title}
+                      </h4>
+                      <p>
+                        {item.point}
+                      </p>
+                    </Link>
+                  </figure>
+                )) : ''
               }
             </div>
             <div id="map" />

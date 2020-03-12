@@ -11,7 +11,7 @@ const Article = () => {
         .then((json) => {
           console.log(json);
           setArticle(json);
-        });
+        }); 
     }
   });
   return (

@@ -4,11 +4,11 @@ const webpack = require('webpack');
 module.exports = {
   entry: ['./src/index.js'],
   output: {
-    path: path.resolve(__dirname, 'public'), // 此為輸出的位置，通常跟index.html一起輸出
+    path: path.resolve(__dirname, 'public'), // 此為輸出的位置，通常跟index.html一起輸出，第二個參數不用斜線不然會去找/public這個資料夾
     filename: 'bundle.js',
-    publicPath: '/public/',
+    // publicPath: '/public/', // 尋找資源的路由 針對index.html該從哪引進
   },
-  module: {
+  module: { // module指的是 模組引入語法統一
     // rules的值是一個陣列可以存放多個loader物件
     rules: [
       {
@@ -33,9 +33,9 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              publicPath: '/images',
-              outputPath: 'images/',
-              emitFile: false,
+              // publicPath: '/images',
+              // outputPath: 'images/',
+              emitFile: false, // 要不要拷貝檔案到打包後的資料夾裡
             },
           },
         ],
@@ -43,9 +43,10 @@ module.exports = {
     ],
   },
   devServer: {
-    // 指定開啟port為3000
+    // 指定開啟port為8000
     port: 8000,
-
+    contentBase: path.join(__dirname, 'public'), // 指定靜態檔案的監聽位置這樣8000打開後會直接指向public裡的index
+    compress: true,
   },
 };
 

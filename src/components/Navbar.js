@@ -37,7 +37,7 @@ const Navbar = (props) => {
 `;
 
   const Header = css`
-    background: transparent;
+    background: transparent; 
     position: fixed;
     top: 0;
     z-index: 1001;
@@ -53,7 +53,7 @@ const Navbar = (props) => {
   // 在地圖的頁面時
   // 決定是否跑動畫
   const slideAnimate = () => {
-    if (toggleslide) {
+    if (toggleslide || $(window).scrollTop() === 0) {
       $('#header').removeClass('short');
       $('.mynav').css({ display: '' });
     } else {

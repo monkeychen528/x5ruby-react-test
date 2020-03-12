@@ -11,8 +11,20 @@
     flex-basis: 25%;
     flex-direction: column;
     margin-top:83px;
+    overflow-y: scroll;
   }
+
   .RdFilter select{
     width:150px;
     margin: 0 50% 12px;
+  }
+
+  .RdFilter figure a{
+    display: block;
+    width:100%;
+  }
+
+  .RdFilter figure a img{
+    width:100%;
+    object-fit: contain;
   }

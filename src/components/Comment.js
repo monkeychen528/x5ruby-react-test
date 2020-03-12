@@ -5,12 +5,14 @@ import '../asset/comment.css';
 
 const Comment = () => {
   const [ws, setWs] = useState(null);
-  const [room, setRoom] = useState(null);
+  const [connect, setConnect] = useState(false);
+  const [room, setRoom] = useState('大廳');
   const msg = document.querySelector('#msg');
 
   const connectWebSocket = () => {
-    if (room) setWs(websocket('http://localhost:3000', { path: room }));
-    setWs(websocket('http://localhost:3000'));
+    if (room) setWs(websocket('http://localhost:3050', { path: room }));
+    setWs(websocket('http://localhost:3050'));
+    setConnect(true);
   };
   // 監聽送回的訊息
   const initWebSocket = () => {
@@ -35,7 +37,7 @@ const Comment = () => {
   // 送出訊息到websocket
   const sendMessage = () => {
     // console.log(room);
-    ws.emit(room ? 'changeroom' : 'getMessage',
+    ws.emit('message',
       room ? { nowRoom: room, msg: msg.value } : msg.value);
   };
   // 更換房間
@@ -45,14 +47,25 @@ const Comment = () => {
     setRoom(roomName);
     console.log(roomName);
   };
-
+  const disconnect = () => {
+    console.log(123);
+    ws.close();
+  };
 
   useEffect(() => {
-    if (ws) {
+    if (connect) {
       console.log('success');
+      // ws.emit('disconnected');
       initWebSocket();
+    } else {
+      connectWebSocket();
     }
-    if (ws === null) connectWebSocket();
+    // 監聽如果離開頁面則發送disconnect
+    window.addEventListener('popstate', disconnect);
+    return () => {
+      console.log('remove event');
+      window.removeEventListener('popstate', disconnect);
+    };
   }, [ws]);
 
 
@@ -64,6 +77,7 @@ const Comment = () => {
         <aside>
           <div className="roomWrap">
             <ul>
+              <li className="room" onClick={changeRoom} role="presentation">大廳</li>
               <li className="room" onClick={changeRoom} role="presentation">房間一</li>
               <li className="room" onClick={changeRoom} role="presentation">房間二</li>
               <li className="room" onClick={changeRoom} role="presentation">房間三</li>
