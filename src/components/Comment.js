@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import websocket from 'socket.io-client';
 import Navbar from './Navbar';
@@ -8,7 +8,6 @@ const Comment = () => {
   const [ws, setWs] = useState(null);
   const [connect, setConnect] = useState(false);
   const [room, setRoom] = useState('大廳');
-  const [row, setRow] = useState(1);
   const msg = document.querySelector('#msg');
 
   const connectWebSocket = () => {
@@ -67,29 +66,14 @@ const Comment = () => {
       window.removeEventListener('popstate', disconnect);
     };
   }, [ws]);
+
   // type留言的時候更改textarea高度
-  // function usePrevious(value) {
-  //   const originHeight = useRef();
-  //   useEffect(() => {
-  //     originHeight.current = value;
-  //   });
-  //   return originHeight.current;
-  // }
   const adjustHeight = (e) => {
     const grow = Math.ceil(msg.clientHeight);
     const checkHeight = e.target.scrollHeight;
-    // 拆開寫,讓grow取最大值，大於的話高等於scrollHeight不然就恢復41px
-    // const getRow = Math.ceil(checkHeight / grow) + 1;
-    const checkRow = Math.max(grow, checkHeight);
-
-    // console.log(getRow);
-    console.log(grow);
-    console.log(checkHeight);
-    // console.log(originHeight);
-    // setRow(checkRow);
-    // if (originHeight.current !== getRow) {
-    //   originHeight.current = getRow;
-    // }
+    // 拆開寫,grow取得網頁中的高度，checkoutHeight是換行時就會出現scrollHeight
+    // css樣式內部高度預設35px，如果出現scrollHeight代表換行，把text高度設為一樣scroll高度
+    // todo bug刪除文字時需要多刪3~6個字才會縮排
     if (checkHeight >= grow) {
       msg.style.height = `${checkHeight}px`;
     } else {
@@ -97,7 +81,6 @@ const Comment = () => {
     }
   };
 
-  // console.log(originHeight.current);
   return (
     <>
       <Navbar />
