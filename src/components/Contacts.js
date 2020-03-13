@@ -100,7 +100,7 @@ class Contacts extends Component {
               </div>
             </div>
             <div className="userWrap">
-              <img src="/images/author.jpg" alt="" />
+              <img src="images/author.jpg" alt="" />
             </div>
           </div>
           <div className="contactRight pt-2">

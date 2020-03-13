@@ -1,7 +1,10 @@
 
   /* content carousel */
+  /* 當css使用相對路徑引入背景圖時，若圖片在打包後的資料夾裡(自行壓縮移入的狀況)，
+  路徑要以相對路徑，且webpack的loader要設置publicPath，會搜尋此url符合的路徑，
+  也就是說webpack裡的 ../images 中的 .. 會取代這裡的../../public */
   main{
-    background-image:url('/images/wood1.jpg');
+    background-image:url('../../public/images/wood1.jpg');
     background-repeat: repeat;
   }
   .carousel-wrap {
