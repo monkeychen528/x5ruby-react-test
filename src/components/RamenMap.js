@@ -69,6 +69,7 @@ export default class MyMap extends React.Component {
     try {
       const res = await fetch('http://localhost:5000/star');
       const json = await res.json();
+      console.log(city.value);
       this.setState({
         selected: city.value,
         data: json,
