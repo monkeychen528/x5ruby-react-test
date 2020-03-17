@@ -1,12 +1,23 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
+// 重要觀念
+// One big note:
+// outputPath is place where your want to save files
+// publicPath is what url you have in js, css and etc files.
 module.exports = {
   entry: ['./src/index.js'],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      title: '拉麵blog',
+    }),
+  ],
   output: {
     path: path.resolve(__dirname, 'public'), // 此為輸出的位置，通常跟index.html一起輸出，第二個參數不用斜線不然會去找/public這個資料夾
     filename: 'bundle.js',
-    // publicPath: '/public/', // 尋找資源的路由 針對index.html該從哪引進
+    // publicPath: 'public/', // 尋找資源的路由 針對index.html該從哪引進
   },
   module: { // module指的是 模組引入語法統一
     // rules的值是一個陣列可以存放多個loader物件
@@ -33,8 +44,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              // publicPath: '/images',
-              // outputPath: 'images/',
+              publicPath: '../images/',
               emitFile: false, // 要不要拷貝檔案到打包後的資料夾裡
             },
           },
