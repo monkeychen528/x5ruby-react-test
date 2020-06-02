@@ -13,9 +13,13 @@ export default class MyMap extends React.Component {
     super(props);
     this.state = {
       selected: '請選擇縣市',
+      selectedDist: '',
+      InDistAreaData: [],
       data: [],
+      tempMarker: []
     };
   }
+
 
   componentDidMount() {
     map = L.map('map').setView([25.0491609, 121.4890514], 12);
@@ -51,6 +55,24 @@ export default class MyMap extends React.Component {
     }).addTo(map);
   }
 
+  setMarker = ({ tempMarker, InDistAreaData, selectedDist } = this.state) => {
+    // remove the InDistData marker
+    tempMarker.forEach((item) => {
+      map.removeLayer(item);
+    });
+    // set new InDistData marker amd popup
+    const newMarker = InDistAreaData.map((item) => (
+      L.marker([Number(item.lat), Number(item.lng)], { riseOnHover: true })
+        .bindPopup(
+          `<p>${item.name}</p>
+           <p>${item.tel}</p>
+           <p>${selectedDist}${item.place}</p>`,
+        )
+        .openPopup().addTo(map)
+    ));
+    this.setState({ tempMarker: newMarker });
+  }
+
   //  綁定選擇縣市
   handleChange = async (e) => {
     const ind = e.target.selectedIndex; // 取出選取的城市 為selected 的位置
@@ -65,23 +87,52 @@ export default class MyMap extends React.Component {
       return;
     }
     map.panTo(lat.split(','));// 經緯度從逗號切開
-
+    e.persist();
     try {
-      const res = await fetch('http://localhost:5000/star');
+      const res = await fetch('https://my-json-server.typicode.com/monkeychen528/demo/Taipei');
       const json = await res.json();
-      console.log(city.value);
+      console.log('https://my-json-server.typicode.com/monkeychen528/demo/' + e.target.value);
+      console.log(json);
+
       this.setState({
         selected: city.value,
-        data: json,
-      });
+        InDistAreaData: Object.values(json.dist[0])[0],
+        selectedDist: '大安區',
+        data: json.dist,
+      }, () => this.setMarker());
     } catch (error) {
       console.log(error);
     }
   }
 
+  changeDist = (e) => {
+    const selectedDistData = this.state.data.filter((item) => {
+
+      if (Object.keys(item)[0] === e.target.value) return item;
+      // console.log(Object.keys(item)[0] === e.target.value ? Object.values(item)[0] : [])
+    });
+
+    if (selectedDistData.length === 0) {
+      this.setState({
+        selectedDist: e.target.value,
+        InDistAreaData: [],
+      }, () => this.setMarker());
+    } else {
+      this.setState({
+        selectedDist: e.target.value,
+        InDistAreaData: Object.values(selectedDistData[0])[0],
+      }, () => this.setMarker());
+    }
+    // return this.setMarker();
+  }
+
   render() {
-    const { data, selected } = this.state;
-    console.log(this.state);
+    const {
+      selected,
+      selectedDist,
+      InDistAreaData,
+    } = this.state;
+    // console.log(InDistAreaData);
     return (
       <>
         <section>
@@ -98,7 +149,7 @@ export default class MyMap extends React.Component {
               {/* 判斷上方城市是否有選擇，再判斷資料跟選擇城市是否相同 */}
               {
                 selected !== '請選擇縣市' ? (
-                  <select className="toggleSlide">
+                  <select className="toggleSlide" onChange={this.changeDist}>
                     {cityRoad.map((item) => (
                       item.CityName === selected ? (
                         item.AreaList.map((dist) => (
@@ -113,19 +164,21 @@ export default class MyMap extends React.Component {
               }
               {/* 判斷撈回是否有資料 */}
               {
-                data ? data.map((item) => (
+                InDistAreaData ? InDistAreaData.map((item) => (
                   <figure key={item.id}>
                     <Link to="./">
-                      <img src={`images/${item.img}`} alt="" />
+                      {/* <img src={`images/${item.img}`} alt="" /> */}
                       <h4>
-                        {item.title}
+                        {item.name}
                         <small>
-                          {`  評分: ${item.point}`}
+                          {`  電話: ${item.tel}`}
+                          <br />
+                          {` 地址: ${selectedDist}${item.place}`}
                         </small>
                       </h4>
                     </Link>
                   </figure>
-                )) : ''
+                )) : '此區尚無資料'
               }
             </div>
             <div id="map" />

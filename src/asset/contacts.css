@@ -60,7 +60,6 @@ form {
 @media screen and (max-width: 767px) {
   .contactMsg {
     flex-wrap: wrap;
-    justify-content: center;
   }
   .contactLeft {
     flex: 1 0 100%;

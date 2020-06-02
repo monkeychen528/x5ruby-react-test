@@ -12,6 +12,7 @@ function onChange(value) {
 Modal.setAppElement('#root');
 
 const formRef = React.createRef();
+const recaptchaRef = React.createRef();
 
 class Contacts extends Component {
   customStyles = {
@@ -37,7 +38,9 @@ class Contacts extends Component {
   }
 
   componentDidMount() {
-    // grecaptcha.reset();
+    const form = formRef.current;
+    console.log(form)
+    form.reset();
   }
 
   setname = (e) => {
@@ -58,13 +61,17 @@ class Contacts extends Component {
 
   validate = () => {
     const form = formRef.current;
-
     return form.reportValidity();
   };
 
   showModal = (e) => {
+
+    e.preventDefault();
+    const recaptchaValue = recaptchaRef.current.getValue();
+    if (recaptchaValue === '') return alert('請先google驗證');
+
     if (this.validate()) {
-      e.preventDefault();
+      // console.log(recaptchaValue);
       this.setState({ modalIsOpen: true });
     }
   };
@@ -100,7 +107,7 @@ class Contacts extends Component {
               </div>
             </div>
             <div className="userWrap">
-              <img src="/images/author.jpg" alt="" />
+              <img src="images/author.jpg" alt="" />
             </div>
           </div>
           <div className="contactRight pt-2">
@@ -130,6 +137,7 @@ class Contacts extends Component {
               <ReCAPTCHA
                 sitekey="6LceQNoUAAAAAGh_LcEkvu43qxaCiudBleGwjUn1"
                 onChange={onChange}
+                ref={recaptchaRef}
               />
               {/* <div className="g-recaptcha" data-sitekey="6LceQNoUAAAAAGh_LcEkvu43qxaCiudBleGwjUn1" /> */}
               <button type="submit" onClick={this.showModal} className="contactbtn">

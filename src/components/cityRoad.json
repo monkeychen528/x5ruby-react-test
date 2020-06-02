@@ -8,6 +8,11 @@
         },
         "AreaList": [
             {
+                "ZipCode": "106",
+                "AreaName": "大安區",
+                "AreaEngName": "Da’an Dist."
+            },
+            {
                 "ZipCode": "100",
                 "AreaName": "中正區",
                 "AreaEngName": "Zhongzheng Dist."
@@ -26,11 +31,6 @@
                 "ZipCode": "105",
                 "AreaName": "松山區",
                 "AreaEngName": "Songshan Dist."
-            },
-            {
-                "ZipCode": "106",
-                "AreaName": "大安區",
-                "AreaEngName": "Da’an Dist."
             },
             {
                 "ZipCode": "108",

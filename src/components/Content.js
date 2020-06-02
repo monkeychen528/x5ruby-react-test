@@ -66,12 +66,16 @@ const Content = () => {
   // requst API
   useEffect(() => {
     if (lesson.length === 0) {
-      fetch('  http://localhost:5000/star')
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json);
-          setLesson(json);
-        });
+      try {
+        fetch('https://my-json-server.typicode.com/monkeychen528/demo/star')
+          .then((res) => res.json())
+          .then((json) => {
+            console.log(json);
+            setLesson(json);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [lesson]);
 
@@ -132,7 +136,7 @@ const Content = () => {
     };
   }, [stnum, resizeWindow]);
 
-  if (lesson.length === 0) return '...載入中';
+
   // console.log(state);
   const tempData = ['山頭火', '鷹流', '凪', '鳥人'];
   return (
@@ -193,16 +197,16 @@ const Content = () => {
           </ul>
           <div className="carousel d-flex">
             <Link to="./" className="carousel-img">
-              <img src="images/ramen1.jpg" alt="山頭火" />
+              <img src="./images/ramen1.jpg" alt="山頭火" />
             </Link>
             <Link to="./" className="carousel-img">
-              <img src="images/ramen2.jpg" alt="鷹流" />
+              <img src="./images/ramen2.jpg" alt="鷹流" />
             </Link>
             <Link to="./" className="carousel-img">
-              <img src="images/ramen3.jpg" alt="凪" />
+              <img src="./images/ramen3.jpg" alt="凪" />
             </Link>
             <Link to="./" className="carousel-img">
-              <img src="images/ramen5.jpg" alt="鳥人" />
+              <img src="./images/ramen5.jpg" alt="鳥人" />
             </Link>
           </div>
         </div>
@@ -267,19 +271,21 @@ const Content = () => {
         <div className="content container">
           <h2 className="title title-color"> 拉麵星星推薦</h2>
           <div className="cardwrap ">
-            {lesson.map((el) => (
-              <Link key={el.id} to="./" className="myCard">
-                <div className="cardCap">
-                  <img src={`images/${el.img}`} alt="" />
-                </div>
-                <div className="cardContent">
-                  <h5>{el.title}</h5>
-                  <p>{el.time}</p>
-                  分數:
-                  {el.point}
-                </div>
-              </Link>
-            ))}
+            {/* if (lesson.length === 0) return; */}
+            {lesson.length === 0 ? '...載入中'
+              : lesson.map((el) => (
+                <Link key={el.id} to="./" className="myCard">
+                  <div className="cardCap">
+                    <img src={`images/${el.img}`} alt="" />
+                  </div>
+                  <div className="cardContent">
+                    <h5>{el.title}</h5>
+                    <p>{el.time}</p>
+                    分數:
+                    {el.point}
+                  </div>
+                </Link>
+              ))}
           </div>
           <Link to="./" className="lessonLink">
             看更多推薦
