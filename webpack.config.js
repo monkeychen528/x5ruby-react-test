@@ -8,8 +8,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // outputPath is place where your want to save files
 // publicPath is what url you have in js, css and etc files.
 module.exports = {
-  devtool: 'source-map',
-  entry: ['./src/index.js'],
+  devtool: 'eval',
+  entry: ['./src/index.js', './src/components/Article.js', './src/components/MapIndex.js'],
   output: {
     path: path.resolve(__dirname, 'public'), // 此為輸出的位置，通常跟index.html一起輸出，第二個參數不用斜線不然會去找/public這個資料夾
     filename: '[name].js',
@@ -43,7 +43,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
-    new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['*.js'] }),
+    new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['*.js', '*.map', '*.html'] }),
   ],
   module: { // module指的是 模組引入語法統一
     // rules的值是一個陣列可以存放多個loader物件
