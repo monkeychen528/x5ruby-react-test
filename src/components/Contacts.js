@@ -13,6 +13,7 @@ Modal.setAppElement('#root');
 
 const formRef = React.createRef();
 const recaptchaRef = React.createRef();
+const phoneExp = /^\d{7,10}$/;
 
 class Contacts extends Component {
   customStyles = {
@@ -39,7 +40,7 @@ class Contacts extends Component {
 
   componentDidMount() {
     const form = formRef.current;
-    console.log(form)
+    console.log(form);
     form.reset();
   }
 
@@ -52,7 +53,8 @@ class Contacts extends Component {
   };
 
   setphone = (e) => {
-    this.setState({ phone: e.target.value });
+    document.querySelector('#phone').setCustomValidity('');
+    this.setState({ phone: +(e.target.value) });
   };
 
   setmessage = (e) => {
@@ -61,11 +63,25 @@ class Contacts extends Component {
 
   validate = () => {
     const form = formRef.current;
+    // let check = false;
+    const {
+      email,
+      phone,
+      message,
+    } = this.state;
+
+    // select選擇棄沒辦法設置在外面，生成dom的時候尚未render，不然就要在constructor前指定原型
+    if (phoneExp.test(phone) === false) {
+      document.querySelector('#phone').setCustomValidity('號碼需7~10碼');
+      return false;
+    }
+    document.querySelector('#phone').setCustomValidity('');
+
+
     return form.reportValidity();
   };
 
   showModal = (e) => {
-
     e.preventDefault();
     const recaptchaValue = recaptchaRef.current.getValue();
     if (recaptchaValue === '') return alert('請先google驗證');
@@ -79,6 +95,26 @@ class Contacts extends Component {
   closeModal = () => {
     this.setState({ modalIsOpen: false });
   };
+
+  sendMail = () => {
+    // todo 設定收件人跟取得資料設定
+
+    // const {
+    //   name,
+    //   email,
+    //   phone,
+    //   message,
+    // } = this.state;
+    // const mailTo = document.querySelector('#mailTo');
+    // const to = 'it.brucechen@gmail.com';
+    // const subject = '關於拉麵地圖問題';
+    // let body = `詢問人: ${name} %0A%0A%0A`;
+    // body += `電話: ${phone} %0A`;
+    // body += `信箱: ${email} %0A`;
+    // body += `訊息: ${message} %0A`;
+    // mailTo.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    // mailTo.click();
+  }
 
   render() {
     const {
@@ -125,6 +161,7 @@ class Contacts extends Component {
                 onChange={this.setemail}
               />
               <input
+                id="phone"
                 type="number"
                 placeholder="電話"
                 required
@@ -150,7 +187,7 @@ class Contacts extends Component {
               style={this.customStyles}
               contentLabel="Example Modal"
             >
-              <form>
+              <form id="myform" encType="text/plain" acceptCharset="utf-8">
                 <input
                   placeholder="名字"
                   disabled
@@ -173,8 +210,9 @@ class Contacts extends Component {
                   defaultValue={message}
                 />
                 {/* 我不是機器人驗證 */}
-                <button type="submit" className="contactbtn">
+                <button type="submit" className="contactbtn" onClick={this.sendMail}>
                   送出
+                  {/* <a id="mailTo" /> */}
                 </button>
               </form>
             </Modal>

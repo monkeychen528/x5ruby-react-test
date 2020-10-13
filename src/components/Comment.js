@@ -11,6 +11,7 @@ const Comment = () => {
   const msg = document.querySelector('#msg');
 
   const connectWebSocket = () => {
+    // 伺服器目前是local所以別台電腦無法連接
     if (room) setWs(websocket('http://localhost:3050', { path: room }));
     setWs(websocket('http://localhost:3050'));
     setConnect(true);
