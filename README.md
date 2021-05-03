@@ -1,5 +1,9 @@
 download you can see simple leaflet setting,comment area need backend setting
 
+example:https://monkeychen528.github.io/ramen/public
+
+the file public is bundled for static website.
+
 ### About this project 
 This is a site for Ramen (ラーメン)　in Taiwan where i had eatten.
 I'm going todo is 
