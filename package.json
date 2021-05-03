@@ -67,6 +67,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
+    "dev": "webpack-dev-server",
     "watch": "webpack --mode development --watch",
     "build": "webpack --mode production"
   },

@@ -42,6 +42,10 @@ class Contacts extends Component {
     const form = formRef.current;
     console.log(form);
     form.reset();
+    const script = document.createElement('script"');
+    script.src = 'https://apis.google.com/js/platform.js';
+    script.async = true;
+    document.body.appendChild(script);
   }
 
   setname = (e) => {
@@ -88,13 +92,22 @@ class Contacts extends Component {
 
     if (this.validate()) {
       // console.log(recaptchaValue);
-      this.setState({ modalIsOpen: true });
+      return this.setState({ modalIsOpen: true });
     }
   };
 
   closeModal = () => {
     this.setState({ modalIsOpen: false });
   };
+
+  onSignIn = (googleUser) => {
+    const profile = googleUser.getBasicProfile();
+    console.log(`ID: ${profile.getId()}`); // Do not send to your backend! Use an ID token instead.
+    console.log(`Name: ${profile.getName()}`);
+    console.log(`Image URL: ${profile.getImageUrl()}`);
+    console.log(`Email: ${profile.getEmail()}`); // This is null if the 'email' scope is not present.
+  }
+
 
   sendMail = () => {
     // todo 設定收件人跟取得資料設定
@@ -176,6 +189,7 @@ class Contacts extends Component {
                 onChange={onChange}
                 ref={recaptchaRef}
               />
+              <div className="g-signin2" data-onsuccess="onSignIn" />
               {/* <div className="g-recaptcha" data-sitekey="6LceQNoUAAAAAGh_LcEkvu43qxaCiudBleGwjUn1" /> */}
               <button type="submit" onClick={this.showModal} className="contactbtn">
                 送出

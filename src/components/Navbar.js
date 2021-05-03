@@ -3,7 +3,7 @@ import React, {
   useEffect, useState, useCallback,
 } from 'react';
 import $ from 'jquery';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import '../asset/mainNav.css';
@@ -15,6 +15,9 @@ const show = () => {
 const Navbar = (props) => {
   const [toggleslide, setToggleslide] = useState(true);
   const { page } = props;
+  const router = useLocation();
+  console.log(router)
+
   const body = document.querySelector('body');
   window.addEventListener('resize', () => {
     if (body.offsetWidth > 991) {
