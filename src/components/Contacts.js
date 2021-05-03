@@ -42,7 +42,11 @@ class Contacts extends Component {
     const form = formRef.current;
     console.log(form);
     form.reset();
-    const script = document.createElement('script"');
+    const meta = document.createElement('meta');
+    meta.name = 'google-signin-client_id';
+    meta.content = '756247473322-7leqoc5gmm10omqn3lk1gnnpmrsge3lm.apps.googleusercontent.com';
+    document.body.prepend(meta);
+    const script = document.createElement('script');
     script.src = 'https://apis.google.com/js/platform.js';
     script.async = true;
     document.body.appendChild(script);
